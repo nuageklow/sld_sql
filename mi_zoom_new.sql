@@ -2,7 +2,7 @@
 CREATE TABLE exclusion_table AS
 WITH zoom_combine AS (
   SELECT * FROM zoom_webinar_event
-  UNION UNION ALL
+  UNION ALL
   SELECT * FROM zoom_meeting_event
 )
 SELECT DISTINCT zoom_combine.id
