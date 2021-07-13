@@ -80,7 +80,7 @@ SELECT
     participants.duration::BIGINT AS duration_second,
     events.start_time::TIMESTAMP
 FROM
-    zoom_webinar_participants AS participants
+    webinar_participants AS participants
 LEFT JOIN
     zoom_webinar_event AS events
         ON participants.webinar_id = events.event_id
@@ -89,7 +89,6 @@ WHERE participants.webinar_id = events.event_id
 
 
 /* webinar panelist */
-ALTER TABLE zoom_webinar_panelist RENAME TO zoom_webinar_panelist_wrangling;
 CREATE TABLE zoom_webinar_panelist AS
 SELECT
   id,
@@ -98,11 +97,10 @@ SELECT
   name AS panelist_full_name,
   webinar_id AS event_id
 FROM
-  zoom_webinar_panelist_wrangling panelist
+  webinar_panelist panelist
 LEFT JOIN zoom_webinar_event events ON panelist.webinar_id = events.event_id;
 
 /* meeting event */
-ALTER TABLE zoom_meeting_event RENAME TO zoom_meeting_event_wrangling;
 CREATE TABLE zoom_meeting_event AS
 SELECT
   md5(concat(regexp_replace(lower(event.id), '[^\w]+ ','','g'),regexp_replace(cast(start_time as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
@@ -120,7 +118,7 @@ SELECT
   start_time,
   duration::INTEGER AS duration_minutes,
 FROM
-  zoom_meeting_event_wrangling event
+  meeting_event event
 WHERE id NOT IN (SELECT id FROM exclusion_table);
 
 /* zoom meeting registration */
@@ -144,7 +142,7 @@ SELECT
   org AS current_company,
   latest_job_position AS latest_role
 FROM
-  zoom_meeting_registrants registrants
+  meeting_registrants registrants
 LEFT JOIN zoom_webinar_event events ON registrants.webinar_id = events.event_id
 WHERE registrants.webinar_id = events.event_id
   AND events.id NOT IN (SELECT id FROM exclusion_table);
@@ -168,7 +166,7 @@ SELECT
     participants.duration::BIGINT AS duration_second,
     events.start_time::TIMESTAMP
 FROM
-    zoom_meeting_participants AS participants
+    meeting_participants AS participants
 LEFT JOIN
     zoom_meeting_event AS events
         ON participants.webinar_id = events.event_id
@@ -176,7 +174,6 @@ WHERE participants.webinar_id = events.event_id
   AND events.event_id NOT IN (SELECT id FROM exclusion_table);
 
 /* zoom meeting panelist */
-ALTER TABLE zoom_meeting_panelist RENAME TO zoom_webinar_panelist_wrangling;
 CREATE TABLE zoom_meeting_panelist AS
 SELECT
   id,
@@ -185,7 +182,7 @@ SELECT
   email,
   name AS panelist_full_name
 FROM
-  zoom_meeting_panelist_wrangling panelists
+  meeting_panelist panelists
 LEFT JOIN
   zoom_meeting_event events ON panelists.webinar_id = events.event_id
 WHERE webinar_id NOT IN (SELECT id FROM exclusion_table);
