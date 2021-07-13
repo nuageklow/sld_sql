@@ -1,9 +1,9 @@
 /* exclusion_table */
 CREATE TABLE exclusion_table AS
 WITH zoom_combine AS (
-  SELECT * FROM zoom_webinar_event
+  SELECT * FROM webinar_event
   UNION ALL
-  SELECT * FROM zoom_meeting_event
+  SELECT * FROM meeting_event
 )
 SELECT DISTINCT zoom_combine.id
 FROM zoom_combine
@@ -14,8 +14,6 @@ WHERE (topic LIKE '[Webinar]%' AND date(start_time) < date('2021-04-01'))
 
 
 /* zoom webinar event */
-ALTER TABLE zoom_webinar_event RENAME TO zoom_webinar_event_wrangling;
-
 CREATE TABLE zoom_webinar_event AS
 SELECT
   md5(concat(regexp_replace(lower(event.id), '[^\w]+ ','','g'),regexp_replace(cast(start_time as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
@@ -33,8 +31,9 @@ SELECT
   start_time,
   duration::INTEGER AS duration_minutes
 FROM
-    zoom_webinar_event_wrangling event
-WHERE id NOT IN (SELECT * FROM exclusion_table);
+  webinar_event event
+WHERE id NOT IN (SELECT id FROM exclusion_table);
+
 
 /* zoom webinar registration */
 CREATE TABLE zoom_webinar_registration AS
@@ -57,8 +56,7 @@ SELECT
   org AS current_company,
   latest_job_position AS latest_role
 FROM
-  zoom_webinar_registrants registrants
-LEFT JOIN
+  webinar_registrants registrants LEFT JOIN
   zoom_webinar_event events ON registrants.webinar_id = events.event_id
 WHERE events.id NOT IN (SELECT id FROM exclusion_table)
 WHERE registrants.webinar_id = events.event_id
