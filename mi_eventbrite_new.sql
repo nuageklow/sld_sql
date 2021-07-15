@@ -1,3 +1,5 @@
+
+
 CREATE TABLE eventbrite_event AS
 SELECT
   id AS event_id,
