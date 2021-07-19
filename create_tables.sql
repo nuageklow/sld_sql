@@ -1,3 +1,8 @@
+/*****
+
+ZOOM WEBINAR TABLES 
+
+*****/
 /* zoom_webinar_event on test schema */
 CREATE TABLE test.zoom_webinar_event (
 	u_event_id text null,
@@ -61,7 +66,11 @@ CREATE TABLE test.zoom_webinar_panelist (
 );
 
 
-/***** ZOOM MEETING TABLES *****/
+/*****
+
+ZOOM MEETING TABLES
+
+*****/
 /* zoom_meeting_event on test schema */
 CREATE TABLE test.zoom_meeting_event (
 	u_event_id text null,
