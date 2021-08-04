@@ -41,10 +41,6 @@ WHERE
   id NOT IN (SELECT id FROM exclusion_table);
 
 
-
-
-"id","profile_email","profile_first_name","profile_last_name","profile_addresses_home_city","profile_addresses_home_country","profile_gender","status","created","changed","event_id","age_group","latest_role","current_industry","event_referred_source","current_job_level","current_company"
-
 CREATE TABLE eventbrite_registration AS
 SELECT
   event.u_event_id,
