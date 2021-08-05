@@ -15,6 +15,13 @@
         "db_table_name": "zoom_webinar_event",
         "columns": [
           {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
             "name": "uuid",
             "type": "text",
             "nullable": true,
@@ -23,13 +30,6 @@
           },
           {
             "name": "event_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "u_event_id",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -50,7 +50,7 @@
             "db_column_name": ""
           },
           {
-            "name": "event_country_region",
+            "name": "event_region",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -71,10 +71,10 @@
             "db_column_name": ""
           },
           {
-            "name": "start_time",
+            "name": "event_date",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           },
           {
@@ -82,182 +82,6 @@
             "type": "integer",
             "nullable": true,
             "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_registration",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_unique_attendees",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_users",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_pending",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_cancelled",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_newcomers",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          }
-        ]
-      },
-      {
-        "escape": "\\",
-        "path": "/data/in/tables/zoom_webinar_event_duplicated.csv",
-        "headers": true,
-        "delimiter": ",",
-        "quotation": "\"",
-        "auto_create": false,
-        "primary_keys": [
-          "u_event_id"
-        ],
-        "load_method": "upsert",
-        "db_table_name": "zoom_webinar_event_duplicated",
-        "columns": [
-          {
-            "name": "uuid",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "u_event_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_name",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_city",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_country_region",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "organising_chapter",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_status",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "start_time",
-            "type": "timestamp",
-            "nullable": true,
-            "default": "1989-11-17 00:00:00",
-            "db_column_name": ""
-          },
-          {
-            "name": "duration_minutes",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_registration",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_unique_attendees",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_users",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_pending",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_cancelled",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_newcomers",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "batch_processing_date",
-            "type": "timestamp",
-            "nullable": true,
-            "default": "1989-11-17 00:00:00",
             "db_column_name": ""
           }
         ]
@@ -276,6 +100,13 @@
         "db_table_name": "zoom_webinar_panelist",
         "columns": [
           {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
             "name": "id",
             "type": "text",
             "nullable": true,
@@ -283,7 +114,7 @@
             "db_column_name": ""
           },
           {
-            "name": "u_event_id",
+            "name": "event_id",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -298,13 +129,6 @@
           },
           {
             "name": "panelist_full_name",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_id",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -403,10 +227,10 @@
             "db_column_name": ""
           },
           {
-            "name": "start_time",
+            "name": "event_date",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           }
         ]
@@ -425,14 +249,14 @@
         "db_table_name": "zoom_webinar_registration",
         "columns": [
           {
-            "name": "id",
+            "name": "u_event_id",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
           },
           {
-            "name": "u_event_id",
+            "name": "id",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -547,140 +371,6 @@
       },
       {
         "escape": "\\",
-        "path": "/data/in/tables/zoom_meeting_event_duplicated.csv",
-        "headers": true,
-        "delimiter": ",",
-        "quotation": "\"",
-        "auto_create": false,
-        "primary_keys": [
-          "u_event_id"
-        ],
-        "load_method": "upsert",
-        "db_table_name": "zoom_meeting_event_duplicated",
-        "columns": [
-          {
-            "name": "uuid",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "u_event_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_name",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_city",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_country_region",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "organising_chapter",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "event_status",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "start_time",
-            "type": "timestamp",
-            "nullable": true,
-            "default": "1989-11-17 00:00:00",
-            "db_column_name": ""
-          },
-          {
-            "name": "duration_minutes",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_registration",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_unique_attendees",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_users",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_pending",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_cancelled",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "number_of_newcomers",
-            "type": "integer",
-            "nullable": true,
-            "default": "1",
-            "db_column_name": ""
-          },
-          {
-            "name": "batch_processing_date",
-            "type": "timestamp",
-            "nullable": true,
-            "default": "1989-11-17 00:00:00",
-            "db_column_name": ""
-          }
-        ]
-      },
-      {
-        "escape": "\\",
         "path": "/data/in/tables/zoom_meeting_event.csv",
         "headers": true,
         "delimiter": ",",
@@ -752,7 +442,7 @@
             "name": "start_time",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           },
           {
@@ -879,14 +569,14 @@
             "name": "joined_timestamp",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           },
           {
             "name": "left_timestamp",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           },
           {
@@ -897,10 +587,10 @@
             "db_column_name": ""
           },
           {
-            "name": "start_time",
+            "name": "event_date",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           }
         ]
@@ -1034,7 +724,7 @@
             "name": "registration_timestamp",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           }
         ]
