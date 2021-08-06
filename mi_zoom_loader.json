@@ -9,7 +9,7 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "event_id"
+          "u_event_id"
         ],
         "load_method": "upsert",
         "db_table_name": "zoom_webinar_event",
@@ -209,14 +209,14 @@
             "name": "joined_timestamp",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           },
           {
             "name": "left_timestamp",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           },
           {
@@ -364,7 +364,7 @@
             "name": "registration_timestamp",
             "type": "timestamp",
             "nullable": true,
-            "default": "1989-11-17 00:00:00",
+            "default": "2016-01-01 00:00:00",
             "db_column_name": ""
           }
         ]
