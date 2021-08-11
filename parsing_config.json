@@ -1,0 +1,154 @@
+{
+  "events": [
+    {
+      "input_file": "in/files/meeting_participants.ndjson",
+      "output_file": "out/tables/zoom_meeting_participants.csv",
+      "fields": [
+        "id",
+        "user_id",
+        "user_email",
+        "name",
+        "join_time",
+        "leave_time",
+        "duration",
+        "meeting_id"
+      ]
+    },
+    {
+      "input_file": "in/files/webinar_participants.ndjson",
+      "output_file": "out/tables/zoom_webinar_participants.csv",
+      "fields": [
+        "id",
+        "user_id",
+        "user_email",
+        "name",
+        "join_time",
+        "leave_time",
+        "duration",
+        "webinar_id"
+      ]
+    },
+    {
+      "input_file": "in/files/webinar_registrants.ndjson",
+      "output_file": "out/tables/zoom_webinar_registrants.csv",
+      "fields": [
+        "id",
+        "first_name",
+        "last_name",
+        "email",
+        "city",
+        "country",
+        "status",
+        "create_time",
+        "webinar_id",
+        "join_url",
+        "org"
+      ],
+      "question_fields": [
+        "age",
+        "gender",
+        "latest_job_position",
+        "job_level",
+        "event_referral",
+        "industry"
+      ],
+      "questions_map": {
+        "Gender": "gender",
+        "What's your age bracket?": "age",
+        "In which industry do you work?": "industry",
+        "What is the functional role of your latest job position?": "latest_job_position",
+        "How did you find out about this event?": "event_referral",
+        "What is your Job Level?": "job_level",
+        "What is your Job Level ?": "job_level",
+        "What is your Job level?": "job_level"
+      },
+      "questions_to_skip": [
+        "Agree to terms & conditions <https://shelovesdata.com/terms-and-conditions/> and privacy policy https://shelovesdata.com/privacy-policy/",
+        "Agree to terms & conditions <https://shelovesdata.com/terms-and-conditions/> and privacy policy <https://shelovesdata.com/privacy-policy/>",
+        "Agree to terms & conditions <https://www.meiro.io/privacy-policy/>'",
+        "Agree to terms & conditions <https://shelovesdata.com/terms-and-conditions/> and privacy policy <https://shelovesdata.com/privacy-policy/>'",
+        "If selected others for the previous question, please specify",
+        "If selected others for previous question, please specify",
+        "Do you agree to be contacted directly by Informatica to learn more about their platforms and their initiatives for gender diversity."
+      ]
+    },
+    {
+      "input_file": "in/files/meeting_registrants.ndjson",
+      "output_file": "out/tables/zoom_meeting_registrants.csv",
+      "fields": [
+        "id",
+        "first_name",
+        "last_name",
+        "email",
+        "city",
+        "country",
+        "status",
+        "create_time",
+        "meeting_id",
+        "join_url"
+      ],
+      "question_fields": [
+        "age",
+        "gender",
+        "latest_job_position",
+        "job_level",
+        "event_referral",
+        "industry",
+        "company"
+      ],
+      "questions_map": {
+        "Gender": "gender",
+        "What's your age bracket?": "age",
+        "In which industry do you work?": "industry",
+        "What is the functional role of your latest job position?": "latest_job_position",
+        "How did you find out about this event?": "event_referral",
+        "What is your Job Level?": "job_level",
+        "What is your Job Level ?": "job_level",
+        "What is your Job level?": "job_level"
+      },
+      "questions_to_skip": [
+        "Agree to terms & conditions <https://shelovesdata.com/terms-and-conditions/> and privacy policy https://shelovesdata.com/privacy-policy/",
+        "Agree to terms & conditions <https://shelovesdata.com/terms-and-conditions/> and privacy policy <https://shelovesdata.com/privacy-policy/>",
+        "Agree to terms & conditions <https://www.meiro.io/privacy-policy/>'",
+        "Agree to terms & conditions <https://shelovesdata.com/terms-and-conditions/> and privacy policy <https://shelovesdata.com/privacy-policy/>'",
+        "If selected others for the previous question, please specify",
+        "If selected others for previous question, please specify",
+        "Do you agree to be contacted directly by Informatica to learn more about their platforms and their initiatives for gender diversity."
+      ]
+    },
+    {
+      "input_file": "in/files/webinars.ndjson",
+      "output_file": "out/tables/zoom_webinar_event.csv",
+      "fields": [
+          "uuid",
+          "id",
+          "topic",
+          "start_time",
+          "duration",
+          "timezone"
+      ]
+    },
+    {
+      "input_file": "in/files/meetings.ndjson",
+      "output_file": "out/tables/zoom_meeting_event.csv",
+      "fields": [
+          "uuid",
+          "id",
+          "topic",
+          "start_time",
+          "duration",
+          "timezone"
+      ]
+    },
+    {
+      "input_file": "in/files/webinar_panelists.ndjson",
+      "output_file": "out/tables/zoom_webinar_panelist.csv",
+      "fields": [
+          "id",
+          "name",
+          "email",
+          "webinar_id"
+      ]
+    }
+  ]
+}
