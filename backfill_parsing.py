@@ -1,8 +1,7 @@
-i
 import json
 import csv
 from pathlib import Path
-import pandas
+import pandas as pd
 
 
 # Load configuration
@@ -50,6 +49,8 @@ def parse_custom_questions(custom_questions, questions_to_skip, questions_map):
     return q
 
 
+
+
 # process events
 for event in EVENTS:
     input_file = event['input_file']
@@ -65,14 +66,25 @@ for event in EVENTS:
         fieldnames = event['fields']
         writer = csv.DictWriter(fout, fieldnames + question_fields, quoting=csv.QUOTE_ALL)
         writer.writeheader()
-        for line in fin:
-            tmp = json.loads(line)
-            custom_questions = tmp.get('custom_questions', [])
-            tmp = parse_row(tmp, fieldnames)
 
-            if questions_map:
-                tmp.update(parse_custom_questions(custom_questions, questions_to_skip, questions_map))
+        reader = csv.DictReader(fin)
+        tmp = dict()
 
-            writer.writerow(tmp)
+        # for line in fin:
+        #     tmp = json.loads(line)
+        for rows in reader:
+            for line in rows:
+                print(rows, line)
+                # tmp = json.loads(line)
+                # tmp[rows] = lines
+                custom_questions = tmp.get('custom_questions', [])
+                tmp = parse_row(tmp, fieldnames)
+
+        print(tmp)
+
+        if questions_map:
+            tmp.update(parse_custom_questions(custom_questions, questions_to_skip, questions_map))
+
+        writer.writerow(tmp)
 
     print(f"File written: {output_file}")
