@@ -72,13 +72,12 @@ for event in EVENTS:
 
         # for line in fin:
         #     tmp = json.loads(line)
-        for rows in reader:
-            for line in rows:
-                print(rows, line)
-                # tmp = json.loads(line)
+	for idx, rows in reader:
+	    tmp[idx] = rows
+		 # tmp = json.loads(line)
                 # tmp[rows] = lines
-                custom_questions = tmp.get('custom_questions', [])
-                tmp = parse_row(tmp, fieldnames)
+            custom_questions = tmp.get('custom_questions', [])
+            tmp = parse_row(tmp, fieldnames)
 
         print(tmp)
 
