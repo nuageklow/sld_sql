@@ -50,7 +50,7 @@
             "db_column_name": ""
           },
           {
-            "name": "event_region",
+            "name": "event_country_region",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -94,11 +94,19 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "id"
+          "id_sequence",
+          "u_event_id"
         ],
         "load_method": "upsert",
         "db_table_name": "zoom_webinar_registration",
         "columns": [
+          {
+            "name": "id_sequence",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
           {
             "name": "u_event_id",
             "type": "text",
@@ -114,7 +122,7 @@
             "db_column_name": ""
           },
           {
-            "name": "id",
+            "name": "registrant_id",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -285,7 +293,7 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "event_id"
+          "u_event_id"
         ],
         "load_method": "upsert",
         "db_table_name": "zoom_meeting_event",
@@ -370,11 +378,19 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "id"
+          "id_sequence",
+          "u_event_id"
         ],
         "load_method": "upsert",
         "db_table_name": "zoom_meeting_registration",
         "columns": [
+          {
+            "name": "id_sequence",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
           {
             "name": "u_event_id",
             "type": "text",
@@ -390,7 +406,7 @@
             "db_column_name": ""
           },
           {
-            "name": "id",
+            "name": "registrant_id",
             "type": "text",
             "nullable": true,
             "default": "",
@@ -592,7 +608,7 @@
     "db": {
       "host": "{{SLD_DB_HOST}}",
       "port": "5432",
-      "schema": "{{SLD_DB_SCHEMA}}",
+      "schema": "{{SLD_DB_TEST_SCHEMA}}",
       "database": "{{SLD_DB_DATABASE}}",
       "user": "{{SLD_DB_USERNAME}}",
       "#password": "{{#SLD_DB_PASS}}"

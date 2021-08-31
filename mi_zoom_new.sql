@@ -1,7 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS test;
-
 /* exclusion_table */
-CREATE TABLE test.exclusion_table AS
+CREATE TABLE exclusion_table AS
 WITH zoom_combine AS (
   SELECT * FROM webinar_event
   UNION ALL
@@ -15,7 +13,7 @@ WHERE (topic LIKE '[Webinar]%' AND date(start_time) < date('2021-04-01'))
   OR zwp.user_id NOT IN ('134220800', '33570816', '33574912', '83888128', '134224896', '16787456');
 
   /* event mapping */
-CREATE TABLE test.zoom_event_mapping AS
+CREATE TABLE zoom_event_mapping AS
   WITH mapping_combine AS (
     SELECT * FROM webinar_event_mapping
     UNION
@@ -24,7 +22,7 @@ CREATE TABLE test.zoom_event_mapping AS
   SELECT * FROM mapping_combine;
 
 /* zoom webinar event */
-CREATE TABLE test.zoom_webinar_event AS
+CREATE TABLE zoom_webinar_event AS
 SELECT
   md5(concat(regexp_replace(lower(event.id), '[^\w]+ ','','g'),regexp_replace(cast(start_time as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
   uuid,
@@ -42,15 +40,21 @@ SELECT
   duration::INTEGER AS duration_minutes
 FROM
   webinar_event event
-WHERE id NOT IN (SELECT id FROM test.exclusion_table);
+WHERE id NOT IN (SELECT id FROM exclusion_table);
 
 
 /* zoom webinar registration */
-CREATE TABLE test.zoom_webinar_registration AS
+
+CREATE SEQUENCE id_next_webinar START 1;
+
+ALTER SEQUENCE id_next_webinar RESTART;
+
+CREATE TABLE zoom_webinar_registration AS
 SELECT
+  nextval('id_next_webinar') AS id_sequence,
   zwe.u_event_id,
   registrants.webinar_id AS event_id,
-  registrants.id,
+  registrants.id AS registrant_id,
   participants.user_id AS attendance_user_id,
   email,
   CASE
@@ -82,14 +86,14 @@ SELECT
   event_referral AS event_referred_source,
   create_time AS registration_timestamp
 FROM webinar_registrants registrants
-  LEFT JOIN test.zoom_webinar_event zwe ON registrants.webinar_id = zwe.event_id
+  LEFT JOIN zoom_webinar_event zwe ON registrants.webinar_id = zwe.event_id
   INNER JOIN webinar_participants participants ON registrants.id = participants.id
 WHERE registrants.webinar_id = zwe.event_id
   AND registrants.id = participants.id
-  AND zwe.event_id NOT IN (SELECT id FROM test.exclusion_table);
+  AND zwe.event_id NOT IN (SELECT id FROM exclusion_table);
 
 /* webinar panelist */
-CREATE TABLE test.zoom_webinar_panelist AS
+CREATE TABLE zoom_webinar_panelist AS
 SELECT
   id,
   u_event_id,
@@ -98,18 +102,18 @@ SELECT
   webinar_id AS event_id
 FROM
   webinar_panelist panelist
-LEFT JOIN test.zoom_webinar_event events ON panelist.webinar_id = events.event_id;
+LEFT JOIN zoom_webinar_event events ON panelist.webinar_id = events.event_id;
 
 /* meeting event */
-CREATE TABLE test.zoom_meeting_event AS
+CREATE TABLE zoom_meeting_event AS
 SELECT
   md5(concat(regexp_replace(lower(event.id), '[^\w]+ ','','g'),regexp_replace(cast(start_time as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
   uuid,
   id AS event_id,
   topic AS event_name,
   SPLIT_PART(timezone,'/',2) AS event_city,
-  SPLIT_PART(timezone,'/',1) AS event_country,
-  SPLIT_PART(timezone,'/',2) AS organizing_chapter,
+  SPLIT_PART(timezone,'/',1) AS event_country_region,
+  SPLIT_PART(timezone,'/',2) AS organising_chapter,
   CASE
     WHEN (DATE(start_time)) < current_date THEN 'Cancelled'
     WHEN (DATE(start_time)) > current_date THEN 'Scheduled'
@@ -119,15 +123,19 @@ SELECT
   duration::INTEGER AS duration_minutes
 FROM
   meeting_event event
-WHERE id NOT IN (SELECT id FROM test.exclusion_table);
+WHERE id NOT IN (SELECT id FROM exclusion_table);
 
 
 /* zoom meeting registration */
-CREATE TABLE test.zoom_meeting_registration AS
+CREATE SEQUENCE id_next_meeting START 1;
+ALTER SEQUENCE id_next_meeting RESTART;
+
+CREATE TABLE zoom_meeting_registration AS
 SELECT
+  nextval('id_next_meeting') AS id_sequence,
   zme.u_event_id,
   registrants.meeting_id AS event_id,
-  registrants.id,
+  registrants.id AS registrant_id,
   participants.user_id AS  attendance_user_id,
   email,
   CASE
@@ -159,8 +167,9 @@ SELECT
   event_referral AS event_referred_source,
   create_time AS registration_timestamp
 FROM meeting_registrants registrants
-  LEFT JOIN test.zoom_meeting_event zme ON registrants.meeting_id = zme.event_id
+  LEFT JOIN zoom_meeting_event zme ON registrants.meeting_id = zme.event_id
   INNER JOIN meeting_participants participants ON registrants.id = participants.id
 WHERE registrants.meeting_id = zme.event_id
   AND registrants.id = participants.id
-  AND zme.event_id NOT IN (SELECT id FROM test.exclusion_table);
+  AND zme.event_id NOT IN (SELECT id FROM exclusion_table)
+GROUP BY email, participants.user_email, registrant_id, attendance_user_id, create_time, zme.start_time, u_event_id, registrants.status, registrants.meeting_id, first_name, last_name, age, city, country_region, gender, industry, job_level, company, latest_job_position, event_referral;
