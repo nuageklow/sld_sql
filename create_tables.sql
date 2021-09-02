@@ -121,3 +121,28 @@ CREATE TABLE test.zoom_meeting_panelist (
 	panelist_full_name text NULL,
 	CONSTRAINT zoom_meeting_panelist_pkey PRIMARY KEY (id)
 );
+
+
+/* eventbrite_event table */
+CREATE TABLE test.eventbrite_event(
+	u_event_id text NULL,
+	event_id text NOT NULL DEFAULT ''::text,
+	event_name text NULL,
+	event_date timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	event_city text NULL,
+	event_region text NULL,
+	event_status text NULL
+	CONSTRAINT eventbrite_event PRIMARY KEY (event_id)
+);
+
+CREATE TABLE test.eventbrite_registration(
+	u_event_id text NULL,
+	id text NOT NULL DEFAULT ''::text,
+	event_id text NULL,
+	email text NULL,
+	first_name text NULL,
+	last_name text NULL,
+	gender text NULL,
+	country_region text NULL,
+
+)

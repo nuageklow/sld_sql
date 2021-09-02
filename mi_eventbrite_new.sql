@@ -2,8 +2,9 @@
 
 /* exclusion table */
 CREATE TABLE exclusion_table AS
-SELECT DISTINCT id
+SELECT DISTINCT events.id
 FROM events
+INNER JOIN attendees ON events.id = attendees.event_id
 WHERE
   (events.name_text LIKE '[Webinar]%' AND DATE(events.start_local) < DATE('2021-04-01'))
   OR events.name_text LIKE 'Meiro%'
@@ -17,14 +18,17 @@ WHERE
                         '1270052829@eventbrite.com',
                         '1273170747@eventbrite.com',
                         '1273171829@eventbrite.com')
-  AND attendees.status NOT IN ('Deleted', 'Uncounted Attending')
+  AND attendees.status NOT IN ('Deleted', 'Uncounted Attending');
 
+/*  */
+CREATE TABLE event_mapping AS
+SELECT * FROM eventbrite_event_mapping;
 
 
 CREATE TABLE eventbrite_event AS
 SELECT
+  md5(concat(regexp_replace(lower(events.id), '[^\w]+ ','','g'),regexp_replace(cast(start_local as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
   id AS event_id,
-  u_event_id,
   name_text AS event_name,
   start_local::date AS event_date,
   REGEXP_REPLACE(SPLIT_PART(start_timezone,'/',2),'_',' ') AS event_city,
@@ -34,7 +38,7 @@ SELECT
     WHEN lower(status) IN ('completed','live','ended') THEN 'Completed'
     WHEN lower(status) IN ('canceled','cancelled') THEN 'Cancelled'
     ELSE status
-    END AS event_status,
+    END AS event_status
 FROM
   events
 WHERE
@@ -43,20 +47,25 @@ WHERE
 
 CREATE TABLE eventbrite_registration AS
 SELECT
-  event.u_event_id,
+  ee.u_event_id,
   id,
-  event_id,
-  profile_email,
+  attendees.event_id,
+  profile_email as email,
   INITCAP(LOWER(profile_first_name)) AS first_name,
   INITCAP(LOWER(profile_last_name)) AS last_name,
   CASE
     WHEN profile_gender IN ('******','') THEN NULL
     ELSE profile_gender
   END AS gender,
-  INITCAP(LOWER(profile_addresses_home_city)) AS city,
-  profile_addresses_home_city AS country_region,
-  profile_addresses_home_country,
-  status,
+  profile_addresses_home_city AS city,
+  profile_addresses_home_country AS country_region,
+  CASE
+    WHEN attendees.profile_email IS NOT NULL THEN 'registered_attended'
+    WHEN attendees.status = 'Not Attending' THEN 'cancelled_registration'
+    WHEN ee.event_date < now() THEN 'registered_not_attended'
+    WHEN ee.event_date >= now() THEN 'registered_for_future_event'
+    ELSE 'missing_status'
+  END AS status,
   created AS registration_timestamp,
   changed AS updated_timestamp,
   age_group,
@@ -66,20 +75,5 @@ SELECT
   current_job_level,
   event_referred_source
 FROM attendees
-INNER JOIN eventbrite_event event ON attendess.event_id = event.event_id
-WHERE event.id NOT IN (SELECT id FROM exclusion_table);
-
-
-CREATE TABLE eventbrite_attendance AS
-  event.u_event_id,
-  registration.id,
-  registration.email,
-  registration.first_name,
-  registration.last_name,
-  registration.event_id,
-  registration.status AS attendance_status,
-  registration.updated_timestamp::timestamp AS joined_timestamp,
-  event.start_utc::timestamp
-FROM eventbrite_registration registration
-INNER JOIN eventbrite_event event ON registration.event_id = event.id
-WHERE event.id NOT IN (SELECT id from exclusion_table);
+INNER JOIN eventbrite_event ee ON attendees.event_id = ee.event_id
+WHERE ee.event_id NOT IN (SELECT id FROM exclusion_table);
