@@ -1,4 +1,4 @@
-/* exclusion_table */
+ /* exclusion_table */
 CREATE TABLE exclusion_table AS
 WITH zoom_combine AS (
   SELECT * FROM webinar_event

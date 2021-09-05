@@ -27,8 +27,8 @@ SELECT * FROM eventbrite_event_mapping;
 
 CREATE TABLE eventbrite_event AS
 SELECT
-  md5(concat(regexp_replace(lower(events.id), '[^\w]+ ','','g'),regexp_replace(cast(start_local as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
   id AS event_id,
+  md5(concat(regexp_replace(lower(events.id), '[^\w]+ ','','g'),regexp_replace(cast(start_local as varchar(10)) , '[^\w]+','','g'))) as u_event_id,
   name_text AS event_name,
   start_local::date AS event_date,
   REGEXP_REPLACE(SPLIT_PART(start_timezone,'/',2),'_',' ') AS event_city,
@@ -57,7 +57,7 @@ SELECT
     WHEN profile_gender IN ('******','') THEN NULL
     ELSE profile_gender
   END AS gender,
-  profile_addresses_home_city AS city,
+  profile_addresses_home_city AS city
   profile_addresses_home_country AS country_region,
   CASE
     WHEN attendees.profile_email IS NOT NULL THEN 'registered_attended'
