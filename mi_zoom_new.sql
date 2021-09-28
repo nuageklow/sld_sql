@@ -1,4 +1,4 @@
- /* exclusion_table */
+/* exclusion_table */
 CREATE TABLE exclusion_table AS
 WITH zoom_combine AS (
   SELECT * FROM webinar_event
@@ -39,19 +39,19 @@ SELECT
   start_time::timestamp,
   duration::INTEGER AS duration_minutes
 FROM
-  webinar_event event
-WHERE id NOT IN (SELECT id FROM exclusion_table);
+  webinar_event event;
+-- WHERE id NOT IN (SELECT id FROM exclusion_table);
 
 
 /* zoom webinar registration */
-
-CREATE SEQUENCE id_next_webinar START 1;
-
-ALTER SEQUENCE id_next_webinar RESTART;
-
 CREATE TABLE zoom_webinar_registration AS
 SELECT
-  nextval('id_next_webinar') AS id_sequence,
+  md5(concat(
+  regexp_replace(lower(registrants.webinar_id), '[^\w]+ ','','g'),
+  regexp_replace(lower(email) , '[^\w]+','','g'),
+  regexp_replace(lower(user_id) , '[^\w]+','','g'),
+  regexp_replace(cast(date(create_time) as varchar(10)) , '[^\w]+','','g')
+  )) as id_sequence,
   zwe.u_event_id,
   registrants.webinar_id AS event_id,
   registrants.id AS registrant_id,
@@ -127,12 +127,16 @@ WHERE id NOT IN (SELECT id FROM exclusion_table);
 
 
 /* zoom meeting registration */
-CREATE SEQUENCE id_next_meeting START 1;
-ALTER SEQUENCE id_next_meeting RESTART;
 
 CREATE TABLE zoom_meeting_registration AS
 SELECT
-  nextval('id_next_meeting') AS id_sequence,
+  -- nextval('id_next_meeting') AS id_sequence,
+  md5(concat(
+  regexp_replace(lower(registrants.meeting_id), '[^\w]+ ','','g'),
+  regexp_replace(lower(email) , '[^\w]+','','g'),
+  regexp_replace(lower(user_id) , '[^\w]+','','g'),
+  regexp_replace(cast(date(create_time) as varchar(10)) , '[^\w]+','','g')
+)) as id_sequence,
   zme.u_event_id,
   registrants.meeting_id AS event_id,
   registrants.id AS registrant_id,
