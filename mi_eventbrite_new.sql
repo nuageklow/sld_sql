@@ -8,6 +8,7 @@ INNER JOIN attendees ON events.id = attendees.event_id
 WHERE
   (events.name_text LIKE '[Webinar]%' AND DATE(events.start_local) < DATE('2021-04-01'))
   OR events.name_text LIKE 'Meiro%'
+  OR events.name_text LIKE '%Dashboard%'
   OR events.status IN ('draft', 'drafts')
   OR events.id IN ('102333510284', '53765820015')
   OR attendees.profile_email IN ('1077883534@eventbrite.com',
