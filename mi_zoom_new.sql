@@ -10,6 +10,7 @@ FROM zoom_combine
 LEFT JOIN webinar_participants zwp ON zoom_combine.id = zwp.webinar_id
 WHERE (topic LIKE '[Webinar]%' AND date(start_time) < date('2021-04-01'))
   OR topic LIKE 'Meiro'
+  OR topic LIKE '%Dashboard%'
   OR zwp.user_id NOT IN ('134220800', '33570816', '33574912', '83888128', '134224896', '16787456');
 
   /* event mapping */
