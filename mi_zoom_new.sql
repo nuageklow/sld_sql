@@ -9,9 +9,7 @@ SELECT DISTINCT zoom_combine.id
 FROM zoom_combine
 LEFT JOIN webinar_participants zwp ON zoom_combine.id = zwp.webinar_id
 WHERE (topic LIKE '[Webinar]%' AND date(start_time) < date('2021-04-01'))
-  OR topic LIKE 'Meiro'
-  OR topic LIKE '%Dashboard%'
-  OR zwp.user_id NOT IN ('134220800', '33570816', '33574912', '83888128', '134224896', '16787456');
+  OR topic LIKE 'Meiro';
 
   /* event mapping */
 CREATE TABLE zoom_event_mapping AS
@@ -52,7 +50,7 @@ SELECT
   regexp_replace(lower(email) , '[^\w]+','','g'),
   regexp_replace(lower(user_id) , '[^\w]+','','g'),
   regexp_replace(cast(date(create_time) as varchar(10)) , '[^\w]+','','g')
-  )) as id_sequence,
+  )) as id,
   zwe.u_event_id,
   registrants.webinar_id AS event_id,
   registrants.id AS registrant_id,
@@ -137,7 +135,7 @@ SELECT
   regexp_replace(lower(email) , '[^\w]+','','g'),
   regexp_replace(lower(user_id) , '[^\w]+','','g'),
   regexp_replace(cast(date(create_time) as varchar(10)) , '[^\w]+','','g')
-)) as id_sequence,
+)) as id,
   zme.u_event_id,
   registrants.meeting_id AS event_id,
   registrants.id AS registrant_id,
