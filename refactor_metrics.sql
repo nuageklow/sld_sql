@@ -11,6 +11,13 @@ FROM public.zoom_webinar_event pzwe FULL OUTER JOIN test.zoom_webinar_event tzwe
 ON pzwe.event_id = tzwe.event_id
 WHERE pzwe.event_id IS NULL or tzwe.event_id IS NULL and DATE(pzwe.start_time) >= DATE('2021-07-01');
 
+-- zoom meeting events
+SELECT pzme.event_id AS pzme_event_id, tzme.event_id AS tzme_event_id
+FROM public.zoom_meeting_event pzme FULL OUTER JOIN test.zoom_meeting_event tzme
+ON pzme.event_id = tzme.event_id
+WHERE pzme.event_id IS NULL or tzme.event_id IS NULL and DATE(pzme.start_time) >= DATE('2021-07-01');
+
+
 
 
 select per_reg.per_event_id, per_reg.per_cnt, ter_reg.ter_event_id, ter_reg.ter_cnt
