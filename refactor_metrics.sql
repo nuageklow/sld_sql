@@ -5,6 +5,13 @@ full outer join test.eventbrite_event tee on pee.u_event_id = tee.u_event_id
 where pee.u_event_id is null or tee.u_event_id is null;
 
 
+-- zoom events
+SELECT pzwe.event_id AS pzwe_event_id, tzwe.event_id AS tzwe_event_id
+FROM public.zoom_webinar_event pzwe FULL OUTER JOIN test.zoom_webinar_event tzwe
+ON pzwe.event_id = tzwe.event_id
+WHERE pzwe.event_id IS NULL or tzwe.event_id IS NULL and DATE(pzwe.start_time) >= DATE('2021-07-01');
+
+
 
 select per_reg.per_event_id, per_reg.per_cnt, ter_reg.ter_event_id, ter_reg.ter_cnt
 from
