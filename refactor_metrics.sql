@@ -19,7 +19,7 @@ WHERE pzme.event_id IS NULL or tzme.event_id IS NULL and DATE(pzme.start_time) >
 
 
 
-
+-- eventbrite 
 select per_reg.per_event_id, per_reg.per_cnt, ter_reg.ter_event_id, ter_reg.ter_cnt
 from
 (select per.event_id as per_event_id, count(per.email) as per_cnt
@@ -33,3 +33,21 @@ group by ter.event_id
 ) as ter_reg
 on per_reg.per_event_id = ter_reg.ter_event_id
 where per_reg.per_event_id is null or ter_reg.ter_event_id is null;
+
+
+-- zoom
+WITH 
+pzwr AS (
+SELECT event_id, COUNT(email) AS reg_count
+FROM public.zoom_webinar_registration
+GROUP BY event_id
+),
+tzwr AS (
+SELECT event_id, COUNT(email) AS reg_count
+FROM test.zoom_webinar_registration
+GROUP BY event_id
+)
+SELECT pzwr.event_id AS p_event_id, pzwr.reg_count AS p_reg, tzwr.event_id AS t_event_id, tzwr.reg_count AS t_reg
+FROM pzwr 
+FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id
+WHERE pzwr.event_id IS NULL or tzwr.event_id IS NULL;
