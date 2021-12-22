@@ -1,3 +1,12 @@
+/* 
+METRICS to Validate Refactored Productions
+- numbers of events
+- numbers of registrations
+- registration lists
+
+*/
+
+
 -- eventrite 
 select pee.u_event_id as pee_u_event_id, pee.event_id as pee_event_id, tee.u_event_id as tee_u_event_id, tee.event_id as tee_event_id
 from public.eventbrite_event pee
