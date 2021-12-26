@@ -4,16 +4,60 @@ METRICS to Validate Refactored Productions
 - numbers of registrations
 - registration lists
 
+Eventbrite - 
+89949227561 / 20200218 / MNL - cancelled -> need to backfill
+123 / 2016 / JKT - fb event  -> need to backfill
+
+
 */
 
+/* EVENTBRITE*/
+-- eventrite - inconsistent event_id
+SELECT pee.u_event_id AS pee_u_event_id, pee.event_id AS pee_event_id, tee.u_event_id AS tee_u_event_id, tee.event_id AS tee_event_id
+FROM public.eventbrite_event pee
+FULL OUTER JOIN test.eventbrite_event tee ON pee.u_event_id = tee.u_event_id
+WHERE pee.u_event_id IS null OR tee.u_event_id IS null;
 
--- eventrite 
-select pee.u_event_id as pee_u_event_id, pee.event_id as pee_event_id, tee.u_event_id as tee_u_event_id, tee.event_id as tee_event_id
-from public.eventbrite_event pee
-full outer join test.eventbrite_event tee on pee.u_event_id = tee.u_event_id
-where pee.u_event_id is null or tee.u_event_id is null;
+-- eventbrite - total events cnt
+SELECT COUNT(pee.u_event_id) AS pee_event_cnt, COUNT(tee.u_event_id) AS tee_event_cnt
+FROM public.eventbrite_event pee
+FULL OUTER JOIN test.eventbrite_event tee ON pee.u_event_id = tee.u_event_id;
+
+-- eventbrite -- registration cnt - no record
+SELECT per_reg.per_event_id, per_reg.per_cnt, ter_reg.ter_event_id, ter_reg.ter_cnt
+FROM
+	(SELECT per.event_id AS per_event_id, COUNT(per.email) AS per_cnt
+	FROM public.eventbrite_registration per
+	GROUP BY per.event_id
+	) AS per_reg
+FULL OUTER JOIN
+	(SELECT ter.event_id AS ter_event_id, COUNT(ter.email) AS ter_cnt
+	FROM test.eventbrite_registration ter
+	GROUP BY ter.event_id
+	) AS ter_reg
+ON per_reg.per_event_id = ter_reg.ter_event_id
+WHERE per_reg.per_event_id IS null OR ter_reg.ter_event_id IS null;
+
+-- evenrbrite - registration cnt - inconsistent cnt
+SELECT reg.per_event_id, reg.per_cnt, reg.ter_event_id, reg.ter_cnt
+FROM 
+(SELECT per_reg.per_event_id, per_reg.per_cnt, ter_reg.ter_event_id, ter_reg.ter_cnt
+FROM
+	(SELECT per.event_id AS per_event_id, COUNT(per.email) AS per_cnt
+	FROM public.eventbrite_registration per
+	GROUP BY per.event_id
+	) AS per_reg
+FULL OUTER JOIN
+	(SELECT ter.event_id AS ter_event_id, COUNT(ter.email) AS ter_cnt
+	FROM test.eventbrite_registration ter
+	GROUP BY ter.event_id
+	) AS ter_reg
+ON per_reg.per_event_id = ter_reg.ter_event_id) reg
+WHERE reg.per_event_id = reg.ter_event_id AND reg.per_cnt != reg.ter_cnt 
 
 
+
+/* zoom */
 -- zoom events
 SELECT pzwe.event_id AS pzwe_event_id, tzwe.event_id AS tzwe_event_id
 FROM public.zoom_webinar_event pzwe FULL OUTER JOIN test.zoom_webinar_event tzwe
@@ -29,19 +73,7 @@ WHERE pzme.event_id IS NULL or tzme.event_id IS NULL and DATE(pzme.start_time) >
 
 
 -- eventbrite 
-select per_reg.per_event_id, per_reg.per_cnt, ter_reg.ter_event_id, ter_reg.ter_cnt
-from
-(select per.event_id as per_event_id, count(per.email) as per_cnt
-from public.eventbrite_registration per
-group by per.event_id
-) as per_reg
-full outer join
-(select ter.event_id as ter_event_id, count(ter.email) as ter_cnt
-from test.eventbrite_registration ter
-group by ter.event_id
-) as ter_reg
-on per_reg.per_event_id = ter_reg.ter_event_id
-where per_reg.per_event_id is null or ter_reg.ter_event_id is null;
+
 
 
 -- zoom
