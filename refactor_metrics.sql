@@ -92,3 +92,23 @@ SELECT pzwr.event_id AS p_event_id, pzwr.reg_count AS p_reg, tzwr.event_id AS t_
 FROM pzwr 
 FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id
 WHERE pzwr.event_id IS NULL or tzwr.event_id IS NULL;
+
+
+-- zoom meeting - registration cnt - inconsistent cnt
+SELECT reg.start_time, reg.pzmr_event_id, reg.pzmr_cnt, reg.tzmr_event_id, reg.tzmr_cnt
+FROM (
+    SELECT pzmr_reg.start_time, pzmr_reg.pzmr_event_id, pzmr_reg.pzmr_cnt, tzmr_reg.tzmr_event_id, tzmr_reg.tzmr_cnt
+    FROM 
+    (SELECT pzmr.event_id AS pzmr_event_id, COUNT(pzmr.email) AS pzmr_cnt, pzme.start_time
+    FROM public.zoom_meeting_registration pzmr
+	INNER JOIN public.zoom_meeting_event pzme ON pzmr.event_id = pzme.event_id
+    GROUP BY pzmr.event_id, pzme.start_time
+    ) AS pzmr_reg
+    FULL OUTER JOIN
+    (SELECT tzmr.event_id AS tzmr_event_id, COUNT(tzmr.email) AS tzmr_cnt
+    FROM test.zoom_meeting_registration tzmr
+    GROUP BY tzmr.event_id
+    ) AS tzmr_reg
+    ON pzmr_reg.pzmr_event_id = tzmr_reg.tzmr_event_id
+) reg
+ORDER BY reg.start_time ASC;
