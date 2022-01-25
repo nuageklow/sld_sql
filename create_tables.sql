@@ -41,6 +41,30 @@ CREATE TABLE test.zoom_webinar_registration(
 	CONSTRAINT zoom_webinar_registration_pkey PRIMARY KEY (id)
 );
 
+/* zoom_webinar_registration_v2 */
+CREATE TABLE test.zoom_webinar_registration_v2(
+	id_sequence text NOT NULL default ''::text,
+	u_event_id text NULL,
+	event_id text NULL,
+	registrant_id text NULL,
+	email text NULL,
+	status text NULL,
+	first_name text NULL,
+	last_name text NULL,
+	age_group text NULL,
+	gender text NULL,
+	city text NULL,
+	country_region text,
+	current_industry text NULL,
+	current_job_level text NULL,
+	current_company text NULL,
+	latest_role text NULL,
+	event_referred_source text NULL,
+	registration_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	CONSTRAINT zoom_webinar_registration_v2_pkey PRIMARY KEY (id_sequence)
+);
+
+
 /* zoom_webinar_panelist on test schema */
 CREATE TABLE test.zoom_webinar_panelist (
 	u_event_id text NULL,
@@ -93,6 +117,29 @@ CREATE TABLE test.zoom_meeting_registration(
 	event_referred_source text NULL,
 	registration_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
 	CONSTRAINT zoom_meeting_registration_pkey PRIMARY KEY (id)
+);
+
+/* zoom_meeting_registration_v2 */
+CREATE TABLE test.zoom_meeting_registration_v2(
+	id_sequence text NOT NULL default ''::text,
+	u_event_id text NULL,
+	event_id text NULL,
+	registrant_id text NULL,
+	email text NULL,
+	status text NULL,
+	first_name text NULL,
+	age_group text NULL,
+	last_name text NULL,
+	gender text NULL,
+	city text NULL,
+	country_region text,
+	current_industry text NULL,
+	current_job_level text NULL,
+	current_company text NULL,
+	latest_role text NULL,
+	event_referred_source text NULL,
+	registration_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	CONSTRAINT zoom_meeting_registration_v2_pkey PRIMARY KEY (id_sequence)
 );
 
 /* zoom_meeting_attendance on test schema */

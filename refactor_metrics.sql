@@ -79,19 +79,22 @@ WHERE pzme.event_id IS NULL or tzme.event_id IS NULL and DATE(pzme.start_time) >
 -- zoom
 WITH 
 pzwr AS (
-SELECT event_id, COUNT(email) AS reg_count
-FROM public.zoom_webinar_registration
-GROUP BY event_id
+SELECT start_time, zwr.event_id, COUNT(email) AS reg_count
+FROM public.zoom_webinar_registration zwr
+INNER JOIN public.zoom_webinar_event zwe ON zwr.event_id = zwe.event_id
+GROUP BY zwr.event_id, start_time
 ),
 tzwr AS (
 SELECT event_id, COUNT(email) AS reg_count
 FROM test.zoom_webinar_registration
 GROUP BY event_id
 )
-SELECT pzwr.event_id AS p_event_id, pzwr.reg_count AS p_reg, tzwr.event_id AS t_event_id, tzwr.reg_count AS t_reg
+SELECT pzwr.start_time, pzwr.event_id AS p_event_id, pzwr.reg_count AS p_reg, tzwr.event_id AS t_event_id, tzwr.reg_count AS t_reg
 FROM pzwr 
 FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id
-WHERE pzwr.event_id IS NULL or tzwr.event_id IS NULL;
+WHERE pzwr.event_id IS NULL or tzwr.event_id IS NULL
+ORDER BY pzwr.start_time ASC
+;
 
 
 -- zoom meeting - registration cnt - inconsistent cnt
@@ -112,3 +115,9 @@ FROM (
     ON pzmr_reg.pzmr_event_id = tzmr_reg.tzmr_event_id
 ) reg
 ORDER BY reg.start_time ASC;
+
+
+-- check differnce
+SELECT p.
+FROM public.zoom_webinar_registration pzwr
+
