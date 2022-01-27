@@ -89,16 +89,16 @@ LEFT JOIN zoom_webinar_event zwe ON registrants.webinar_id = zwe.event_id
     AND zwe.event_id NOT IN (SELECT id FROM exclusion_table);
 
 /*  */
-CREATE TABLE zoom_webinar_attendance AS 
+CREATE TABLE zoom_webinar_attendance_v2 AS 
 SELECT
     md5(concat(
     regexp_replace(lower(webinar_id), '[^\w]+ ','','g'),
     regexp_replace(lower(user_email) , '[^\w]+','','g'),
-    regexp_replace(lower(id) , '[^\w]+','','g'),
+    regexp_replace(lower(user_id) , '[^\w]+','','g'),
     regexp_replace(cast(date(join_time) as varchar(10)) , '[^\w]+','','g')
     )) as id_sequence,
     zwe.u_event_id,
-    participants.id,
+    participants.id AS attendee_id,
     participants.user_id,
     participants.user_email AS email,
     INITCAP(LOWER(SPLIT_PART(participants.name, ' ', 1))) AS first_name,
@@ -195,7 +195,7 @@ WHERE registrants.meeting_id = zme.event_id
   AND zme.event_id NOT IN (SELECT id FROM exclusion_table);
 
 /* zoom meeting attendance */
-CREATE TABLE zoom_meeting_attendance AS 
+CREATE TABLE zoom_meeting_attendance_v2 AS 
 SELECT 
     md5(concat(
     regexp_replace(lower(meeting_id), '[^\w]+ ','','g'),
@@ -204,7 +204,7 @@ SELECT
     regexp_replace(cast(date(join_time) as varchar(10)) , '[^\w]+','','g')
     )) as id_sequence,
     zme.u_event_id,
-    participants.id,
+    participants.id AS attendee_id,
     participants.user_id,
     participants.user_email AS email,
     INITCAP(LOWER(SPLIT_PART(participants.name, ' ', 1))) AS first_name,

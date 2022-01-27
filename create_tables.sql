@@ -69,9 +69,16 @@ CREATE TABLE test.zoom_webinar_attendance_v2(
     id_sequence text NOT NULL default ''::text,
     u_event_id text NULL,
     event_id text NULL,
-    attender_id text NULL,
-    attendee_user_id, text NULL
-    
+    attendee_id text NULL,
+    user_id text NULL,
+	email text NULL,
+	first_name text NULL,
+	last_name text NULL,
+	joined_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	left_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	duration_second int4 NULL DEFAULT 1,
+	start_time timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	CONSTRAINT zoom_webinar_attendance_v2_pkey PRIMARY KEY (id_sequence)
 );
 
 
@@ -152,21 +159,20 @@ CREATE TABLE test.zoom_meeting_registration_v2(
 	CONSTRAINT zoom_meeting_registration_v2_pkey PRIMARY KEY (id_sequence)
 );
 
-/* zoom_meeting_attendance on test schema */
-CREATE TABLE test.zoom_meeting_attendance (
-	u_event_id text null,
-	id_sequence text NULL,
-	id text NOT NULL DEFAULT ''::text,
-	user_id text NULL,
+CREATE TABLE test.zoom_meeting_attendance_v2(
+    id_sequence text NOT NULL default ''::text,
+    u_event_id text NULL,
+    event_id text NULL,
+    attendee_id text NULL,
+    user_id text NULL,
 	email text NULL,
 	first_name text NULL,
 	last_name text NULL,
-	event_id text NULL,
 	joined_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
 	left_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
 	duration_second int4 NULL DEFAULT 1,
 	start_time timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
-	CONSTRAINT zoom_meeting_attendance_pkey PRIMARY KEY (id)
+	CONSTRAINT zoom_meeting_attendance_v2_pkey PRIMARY KEY (id_sequence)
 );
 
 /* zoom_meeting_panelist on test schema */
