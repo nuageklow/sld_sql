@@ -65,6 +65,16 @@ CREATE TABLE test.zoom_webinar_registration_v2(
 );
 
 
+CREATE TABLE test.zoom_webinar_attendance_v2(
+    id_sequence text NOT NULL default ''::text,
+    u_event_id text NULL,
+    event_id text NULL,
+    attender_id text NULL,
+    attendee_user_id, text NULL
+    
+);
+
+
 /* zoom_webinar_panelist on test schema */
 CREATE TABLE test.zoom_webinar_panelist (
 	u_event_id text NULL,
