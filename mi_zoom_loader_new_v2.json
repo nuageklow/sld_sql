@@ -1,632 +1,732 @@
 {
-    "parameters": {
-      "tables": [
-        {
-          "escape": "\\",
-          "path": "/data/in/tables/zoom_webinar_event.csv",
-          "headers": true,
-          "delimiter": ",",
-          "quotation": "\"",
-          "auto_create": false,
-          "primary_keys": [
-            "u_event_id"
-          ],
-          "load_method": "upsert",
-          "db_table_name": "zoom_webinar_event",
-          "columns": [
-            {
-              "name": "u_event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "uuid",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_city",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_country_region",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "organising_chapter",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_status",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_date",
-              "type": "timestamp",
-              "nullable": true,
-              "default": "2016-01-01 00:00:00",
-              "db_column_name": ""
-            },
-            {
-              "name": "duration_minutes",
-              "type": "integer",
-              "nullable": true,
-              "default": "1",
-              "db_column_name": ""
-            }
-          ]
-        },
-        {
-          "escape": "\\",
-          "path": "/data/in/tables/zoom_webinar_registration.csv",
-          "headers": true,
-          "delimiter": ",",
-          "quotation": "\"",
-          "auto_create": false,
-          "primary_keys": [
-            "id_sequence",
-            "u_event_id"
-          ],
-          "load_method": "upsert",
-          "db_table_name": "zoom_webinar_registration_v2",
-          "columns": [
-            {
-              "name": "id_sequence",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "u_event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "registrant_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "status",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "email",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "first_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "last_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "gender",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "age_group",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "city",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "country_region",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "current_industry",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "current_job_level",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "current_company",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "latest_role",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_referred_source",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "registration_timestamp",
-              "type": "timestamp",
-              "nullable": true,
-              "default": "2016-01-01 00:00:00",
-              "db_column_name": ""
-            }
-          ]
-        },
-        {
-            "escape": "\\",
-            "path": "/data/in/tables/zoom_webinar_attendance.csv",
-            "headers": true,
-            "delimiter": ",",
-            "quotation": "\"",
-            "auto_create": false,
-            "primary_keys": [
-                "id_sequence",
-                "u_event_id"
-            ],
-            "load_method": "upsert",
-            "db_table_name": "zoom_webinar_attendance",
-            "columns": [
-              {
-                "name": "id_sequence",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "id",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "u_event_id",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "user_id",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "email",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "first_name",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "last_name",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "event_id",
-                "type": "text",
-                "nullable": true,
-                "default": "",
-                "db_column_name": ""
-              },
-              {
-                "name": "joined_timestamp",
-                "type": "timestamp",
-                "nullable": true,
-                "default": "1989-11-17 00:00:00",
-                "db_column_name": ""
-              },
-              {
-                "name": "left_timestamp",
-                "type": "timestamp",
-                "nullable": true,
-                "default": "1989-11-17 00:00:00",
-                "db_column_name": ""
-              },
-              {
-                "name": "duration_second",
-                "type": "integer",
-                "nullable": true,
-                "default": "1",
-                "db_column_name": ""
-              },
-              {
-                "name": "start_time",
-                "type": "timestamp",
-                "nullable": true,
-                "default": "2016-01-01 00:00:00",
-                "db_column_name": ""
-              }
-            ]
+  "parameters": {
+    "tables": [
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_webinar_event.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "u_event_id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_webinar_event",
+        "columns": [
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
           },
-        {
-          "escape": "\\",
-          "path": "/data/in/tables/zoom_webinar_panelist.csv",
-          "headers": true,
-          "delimiter": ",",
-          "quotation": "\"",
-          "auto_create": false,
-          "primary_keys": [
-            "id"
-          ],
-          "load_method": "upsert",
-          "db_table_name": "zoom_webinar_panelist",
-          "columns": [
-            {
-              "name": "u_event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "email",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "panelist_full_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            }
-          ]
-        },
-        {
-          "escape": "\\",
-          "path": "/data/in/tables/zoom_meeting_event.csv",
-          "headers": true,
-          "delimiter": ",",
-          "quotation": "\"",
-          "auto_create": false,
-          "primary_keys": [
-            "u_event_id"
-          ],
-          "load_method": "upsert",
-          "db_table_name": "zoom_meeting_event",
-          "columns": [
-            {
-              "name": "uuid",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "u_event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_city",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_country_region",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "organising_chapter",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_status",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "start_time",
-              "type": "timestamp",
-              "nullable": true,
-              "default": "2016-01-01 00:00:00",
-              "db_column_name": ""
-            },
-            {
-              "name": "duration_minutes",
-              "type": "integer",
-              "nullable": true,
-              "default": "1",
-              "db_column_name": ""
-            }
-          ]
-        },
-        {
-          "escape": "\\",
-          "path": "/data/in/tables/zoom_meeting_registration.csv",
-          "headers": true,
-          "delimiter": ",",
-          "quotation": "\"",
-          "auto_create": false,
-          "primary_keys": [
-            "id_sequence",
-            "u_event_id"
-          ],
-          "load_method": "upsert",
-          "db_table_name": "zoom_meeting_registration_v2",
-          "columns": [
-            {
-              "name": "id_sequence",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "u_event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "registrant_id",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "email",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "first_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "last_name",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "gender",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "age_group",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "city",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "country_region",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "current_industry",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "current_job_level",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "current_company",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "latest_role",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "event_referred_source",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "status",
-              "type": "text",
-              "nullable": true,
-              "default": "",
-              "db_column_name": ""
-            },
-            {
-              "name": "registration_timestamp",
-              "type": "timestamp",
-              "nullable": true,
-              "default": "2016-01-01 00:00:00",
-              "db_column_name": ""
-            }
-          ]
-        }
-      ],
-      "db": {
-        "host": "{{SLD_DB_HOST}}",
-        "port": "5432",
-        "schema": "{{SLD_DB_TEST_SCHEMA}}",
-        "database": "{{SLD_DB_DATABASE}}",
-        "user": "{{SLD_DB_USERNAME}}",
-        "#password": "{{#SLD_DB_PASS}}"
+          {
+            "name": "uuid",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_city",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_country_region",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "organising_chapter",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_status",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_date",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          },
+          {
+            "name": "duration_minutes",
+            "type": "integer",
+            "nullable": true,
+            "default": "1",
+            "db_column_name": ""
+          }
+        ]
+      },
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_webinar_registration.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "id_sequence",
+          "u_event_id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_webinar_registration_v2",
+        "columns": [
+          {
+            "name": "id_sequence",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "registrant_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "email",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "first_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "last_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "gender",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "age_group",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "city",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "country_region",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "current_industry",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "current_job_level",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "current_company",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "latest_role",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_referred_source",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "registration_timestamp",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          }
+        ]
+      },
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_webinar_attendance.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "id_sequence",
+          "u_event_id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_webinar_attendance_v2",
+        "columns": [
+          {
+            "name": "id_sequence",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "attendee_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": "attendee_id"
+          },
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "user_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": "user_id"
+          },
+          {
+            "name": "email",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "first_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "last_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "joined_timestamp",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          },
+          {
+            "name": "left_timestamp",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "20016-01-01 00:00:00",
+            "db_column_name": ""
+          },
+          {
+            "name": "duration_second",
+            "type": "integer",
+            "nullable": true,
+            "default": "1",
+            "db_column_name": ""
+          },
+          {
+            "name": "start_time",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          }
+        ]
+      },
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_webinar_panelist.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_webinar_panelist",
+        "columns": [
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "email",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "panelist_full_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          }
+        ]
+      },
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_meeting_event.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "u_event_id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_meeting_event",
+        "columns": [
+          {
+            "name": "uuid",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_city",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_country_region",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "organising_chapter",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_status",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "start_time",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          },
+          {
+            "name": "duration_minutes",
+            "type": "integer",
+            "nullable": true,
+            "default": "1",
+            "db_column_name": ""
+          }
+        ]
+      },
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_meeting_registration.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "id_sequence",
+          "u_event_id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_meeting_registration_v2",
+        "columns": [
+          {
+            "name": "id_sequence",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "registrant_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "email",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "first_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "last_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "gender",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "age_group",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "city",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "country_region",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "current_industry",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "current_job_level",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "current_company",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "latest_role",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_referred_source",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "registration_timestamp",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          }
+        ]
+      },
+      {
+        "escape": "\\",
+        "path": "/data/in/tables/zoom_meeting_attendance.csv",
+        "headers": true,
+        "delimiter": ",",
+        "quotation": "\"",
+        "auto_create": false,
+        "primary_keys": [
+          "id_sequence",
+          "u_event_id"
+        ],
+        "load_method": "upsert",
+        "db_table_name": "zoom_meeting_attendance_v2",
+        "columns": [
+          {
+            "name": "id_sequence",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "attendee_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": "attendee_id"
+          },
+          {
+            "name": "u_event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "user_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": "user_id"
+          },
+          {
+            "name": "email",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "first_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "last_name",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "event_id",
+            "type": "text",
+            "nullable": true,
+            "default": "",
+            "db_column_name": ""
+          },
+          {
+            "name": "joined_timestamp",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          },
+          {
+            "name": "left_timestamp",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "20016-01-01 00:00:00",
+            "db_column_name": ""
+          },
+          {
+            "name": "duration_second",
+            "type": "integer",
+            "nullable": true,
+            "default": "1",
+            "db_column_name": ""
+          },
+          {
+            "name": "start_time",
+            "type": "timestamp",
+            "nullable": true,
+            "default": "2016-01-01 00:00:00",
+            "db_column_name": ""
+          }
+        ]
       }
+    ],
+    "db": {
+      "host": "{{SLD_DB_HOST}}",
+      "port": "5432",
+      "schema": "{{SLD_DB_TEST_SCHEMA}}",
+      "database": "{{SLD_DB_DATABASE}}",
+      "user": "{{SLD_DB_USERNAME}}",
+      "#password": "{{#SLD_DB_PASS}}"
     }
   }
+}
