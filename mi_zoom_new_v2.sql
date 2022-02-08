@@ -94,7 +94,7 @@ SELECT
     md5(concat(
     regexp_replace(lower(webinar_id), '[^\w]+ ','','g'),
     regexp_replace(lower(user_email) , '[^\w]+','','g'),
-    regexp_replace(lower(id) , '[^\w]+','','g'),
+    regexp_replace(lower(user_id) , '[^\w]+','','g'),
     regexp_replace(cast(date(join_time) as varchar(10)) , '[^\w]+','','g')
     )) as id_sequence,
     zwe.u_event_id,

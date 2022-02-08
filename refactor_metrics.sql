@@ -86,15 +86,15 @@ GROUP BY zwr.event_id, start_time
 ),
 tzwr AS (
 SELECT event_id, COUNT(email) AS reg_count
-FROM test.zoom_webinar_registration
+FROM test.zoom_webinar_registration_v2
 GROUP BY event_id
 )
 SELECT pzwr.start_time, pzwr.event_id AS p_event_id, pzwr.reg_count AS p_reg, tzwr.event_id AS t_event_id, tzwr.reg_count AS t_reg
 FROM pzwr 
 FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id
-WHERE pzwr.event_id IS NULL or tzwr.event_id IS NULL
-ORDER BY pzwr.start_time ASC
+ORDER BY pzwr.start_time asc;
 ;
+
 
 
 -- zoom meeting - registration cnt - inconsistent cnt

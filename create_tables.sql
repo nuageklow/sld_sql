@@ -64,6 +64,23 @@ CREATE TABLE test.zoom_webinar_registration_v2(
 	CONSTRAINT zoom_webinar_registration_v2_pkey PRIMARY KEY (id_sequence)
 );
 
+/* zoom_webinar_attendance_v2 */
+CREATE TABLE test.zoom_webinar_attendance_v2(
+	id_sequence text NOT NULL default ''::text,
+	u_event_id text NULL,
+	event_id text NULL,
+	zoom_id text NULL,
+	user_id text NULL,
+	email text NULL,
+	first_name text NULL,
+	last_name text NULL,
+	joined_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	left_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	duration_second int4 NULL DEFAULT 1,
+	start_time timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp without time zone,
+	CONSTRAINT zoom_webinar_attendance_v2_pkey PRIMARY KEY (id_sequence)	
+);
+
 
 /* zoom_webinar_panelist on test schema */
 CREATE TABLE test.zoom_webinar_panelist (
