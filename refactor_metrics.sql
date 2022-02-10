@@ -92,6 +92,7 @@ GROUP BY event_id
 SELECT pzwr.start_time, pzwr.event_id AS p_event_id, pzwr.reg_count AS p_reg, tzwr.event_id AS t_event_id, tzwr.reg_count AS t_reg
 FROM pzwr
 FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id
+WHERE t_event_id IS NOT NULL
 ORDER BY pzwr.start_time asc;
 ;
 
@@ -113,6 +114,8 @@ FROM pzwa
 FULL OUTER JOIN tzwa ON pzwa.event_id = tzwa.event_id
 ORDER BY pzwa.start_time asc;
 ;
+
+
 
 -- zoom meeting - registration cnt - inconsistent cnt
 SELECT reg.start_time, reg.pzmr_event_id, reg.pzmr_cnt, reg.tzmr_event_id, reg.tzmr_cnt
