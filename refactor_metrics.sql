@@ -76,7 +76,7 @@ WHERE pzme.event_id IS NULL or tzme.event_id IS NULL and DATE(pzme.start_time) >
 
 
 
--- zoom
+-- zoom webinar registration counts
 WITH 
 pzwr AS (
 SELECT start_time, zwr.event_id, COUNT(email) AS reg_count
@@ -94,6 +94,24 @@ FROM pzwr
 FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id
 ORDER BY pzwr.start_time asc;
 ;
+
+-- zoom meeting registration counts
+WITH 
+pzmr AS (
+SELECT start_time, zmr.event_id, COUNT(email) AS reg_count
+FROM public.zoom_meeting_registration zmr
+INNER JOIN public.zoom_meeting_event zme ON zmr.event_id = zme.event_id
+GROUP by zmr.event_id, start_time
+),
+tzmr AS (
+SELECT event_id, COUNT(email) AS reg_count
+FROM test.zoom_meeting_registration_v2
+GROUP BY event_id
+)
+SELECT pzmr.start_time, pzmr.event_id AS p_event_id, pzmr.reg_count AS p_reg, tzmr.event_id AS t_event_id, tzmr.reg_count AS t_reg
+FROM pzmr
+FULL OUTER JOIN tzmr ON pzmr.event_id = tzmr.event_id
+ORDER BY pzmr.start_time ASC;
 
 
 
