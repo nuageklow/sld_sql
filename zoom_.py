@@ -9,6 +9,7 @@ def remapping_cols(zoom_csv):
     df.columns = col_list
 
     print(df.columns)
+    df.to_csv(f'remap_{file_name}')
     # return df
 
 data_path = os.path.join(os.getcwd(), '..', 'data')
