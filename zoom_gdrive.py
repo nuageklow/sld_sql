@@ -18,7 +18,23 @@ def get_csvs(path, report_type):
     if i.startswith('9') and 'csv' in i and report_type in i.lower():
       csv_list.append(i)
   return csv_list
-  
+
+
+def csv_to_df(csv_file, sld_path):
+  webinar_id = csv_file.split(' - ')[0]
+  print(f'processing {webinar_id}')
+  df = pd.read_csv(os.path.join(sld_path, csv_file))
+  col_list = df.columns.tolist()
+  col_list = [col.replace(' ', '_').replace("'","").lower() for col in col_list]
+  df.columns = col_list
+
+  print(df.columns)
+  df.to_csv(f'remap_{file_name}')
+    # return df
+
+data_path = os.path.join(os.getcwd(), '..', 'data')
+csv_list = [os.path.join(data_path, csv_file) for csv_file in os.listdir(data_path) if csv_file[0].isdigit()]
+
 
 def csv_to_df(i, sld_path):
   webinar_id = i.split(' - ')[0]
