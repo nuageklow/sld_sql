@@ -175,7 +175,7 @@ ORDER BY pzwr.start_time asc;
 ;
 
 
-
+-- zoom registration - missing emails
 WITH
 pzwr AS (
 SELECT start_time, zwr.event_id, zwr.email
@@ -192,9 +192,8 @@ outstanding_emails AS (
 SELECT event_id, email FROM pzwr
 EXCEPT
 SELECT event_id, email from tzwr)
-SELECT pzwr.start_time, pzwr.event_id, oe.email
-FROM pzwr 
-INNER JOIN outstanding_emails oe ON pzwr.event_id = oe.event_id
-GROUP BY pzwr.start_time, pzwr.event_id, oe.email
-ORDER BY pzwr.start_time;
+SELECT event_id, email
+FROM outstanding_emails
+GROUP BY event_id, email
+ORDER BY event_id ASC;
 
