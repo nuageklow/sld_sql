@@ -169,7 +169,7 @@ FROM test.zoom_webinar_registration_v2
 )
 SELECT pzwr.start_time, pzwr.event_id AS p_event_id, pzwr.email AS p_email, tzwr.event_id AS t_event_id, tzwr.email AS t_email
 FROM pzwr
-FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id AND pzwr.email IS NOT DISTINCT FROM tzwr.email
+FULL OUTER JOIN tzwr USING (event_id, email)
 WHERE tzwr.event_id IS NOT NULL
 ORDER BY pzwr.start_time asc;
 ;
