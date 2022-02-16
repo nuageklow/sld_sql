@@ -1,67 +1,49 @@
--- create schema
-CREATE SCHEMA zoom;
+DROP TABLE IF EXISTS zoom.clean_registration;
 
-CREATE TABLE zoom.clean_registration(
-  first_name text NULL,
-  last_name text NULL,
-  email text NULL,
-  city text NULL,
-  "country/region" text NULL,
-  phone int NULL,
-  organization text NULL,
-  registration_time text NULL,
-  approval_status text NULL,
-  gender text NULL,
-  "whats_your_age_bracket?" text NULL,
-  "in_which_industry_do_you_work?" text NULL,
-  "if_selected_others_for_the_previous_question,_please_specify" text NULL,
-  what_is_the_functional_role_of_your_latest_job_position? text NULL,
-  "if_selected_others_for_previous_question,_please_specify" text NULL,
-  what_is_your_job_level? text NULL,
-  how_did_you_find_out_about_this_event? text NULL,
-  "agree_to_terms_&_conditions_<https://shelovesdata.com/terms-and-conditions/>_and_privacy_policy_https://shelovesdata.com/privacy-policy/" text NULL,
-  "country/region_name" text NULL,
-  attendance_type text NULL,
-  event_id text NULL,
-  what_is_your_job_level_? text NULL,
-  "agree_to_terms_&_conditions_<https://shelovesdata.com/terms-and-conditions/>_and_privacy_policy_<https://shelovesdata.com/privacy-policy/>" text NULL,"source_name,agree_to_terms_and_conditions_and_privacy_policy" text NULL,
-  "attended_y/n" text NULL,
-  attended? text NULL,
-  date_au text NULL,
-  date_us text NULL,
-  event_name text NULL,
-  organizing_chapter text NULL,
-  event_type text NULL,
-  zoom_event_type text NULL
-);
-
--- create table
-CREATE TABLE zoom.zoom_gui_registration (
-  id text NOT NULL default ''::text,
-  event_id text NULL,
-  email text NULL,
-  status text NULL,
-  first_name text NULL,
-  last_name text NULL,
-  age_group text NULL,
-  gender text NULL,
-  city text NULL,
-  country_region text NULL,
-  current_industry text NULL,
-  current_job_level text NULL,
-  current_company text NULL,
-  latest_role text NULL,
-  event_referred_source text NULL,
-  registration_timestamp timestamp NULL DEFAULT '2016-01-01 00:00:00'::timestamp WITHOUT time zone,
-  CONSTRAINT zoom_gui_registration_pkey PRIMARY KEY (id)
-);
-
-CREATE TABLE zoom_gui_registration AS (
-SELECT
-
-FROM
-cleaned_registration
-)
+CREATE TABLE zoom.clean_registration AS 
+  SELECT 
+    _id AS _id, 
+    event_id AS event_id,
+    email,
+    approval_status AS status,
+    INITCAP(first_name) AS first_name,
+    INITCAP(last_name) AS last_name,
+    CASE
+        WHEN whats_your_age_bracket IN ('46 - 50', '51 & above') THEN '46+'
+        WHEN whats_your_age_bracket = '' THEN 'Not disclosed'
+        WHEN whats_your_age_bracket IS NULL THEN 'Not disclosed'
+        ELSE whats_your_age_bracket
+    END AS age_group,    
+    gender,
+    INITCAP(LOWER(city)) AS city,
+    countryregion AS country_region,
+    in_which_industry_do_you_work AS current_industry,
+    what_is_your_job_level AS current_job_level,
+    organization AS current_company,
+    what_is_the_functional_role_of_your_latest_job_position AS latest_role,
+    registration_time AS registration_timestamp
+  FROM 
+  zoom.registration_raw;
 
 
-first_name	last_name	email	city	country/region	phone	organization	registration_time	approval_status	gender	whats_your_age_bracket?	in_which_industry_do_you_work?	if_selected_others_for_the_previous_question,_please_specify	what_is_the_functional_role_of_your_latest_job_position?	if_selected_others_for_previous_question,_please_specify	what_is_your_job_level?	how_did_you_find_out_about_this_event?	agree_to_terms_&_conditions_<https://shelovesdata.com/terms-and-conditions/>_and_privacy_policy_https://shelovesdata.com/privacy-policy/	country/region_name	attendance_type	event_id	what_is_your_job_level_?	agree_to_terms_&_conditions_<https://shelovesdata.com/terms-and-conditions/>_and_privacy_policy_<https://shelovesdata.com/privacy-policy/>	source_name	agree_to_terms_and_conditions_and_privacy_policy	attended_y/n	attended?	date_au	date_us	event_name	organizing_chapter	event_type	zoom_event_type	
+DROP TABLE IF EXISTS zoom.clean_attendance;
+
+CREATE TABLE zoom.clean_attendance AS 
+  SELECT 
+  _id,
+  event_id,
+  email,
+  INITCAP(LOWER(first_name)) AS first_name,
+  INITCAP(LOWER(last_name)) AS last_name,
+  join_time AS joined_timestamp,
+  leave_time AS left_timestamp,
+  time_in_session_minutes AS duration_second
+  FROM 
+  zoom.attendee_raw;
+
+
+DROP TABLE IF EXISTS zoom.registration_raw;
+DROP TABLE IF EXISTS zoom.attendee_raw;
+
+
+

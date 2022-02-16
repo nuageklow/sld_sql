@@ -154,3 +154,47 @@ FROM pzma
 FULL OUTER JOIN tzma ON pzma.event_id = tzma.event_id
 ORDER BY pzma.start_time asc;
 ;
+
+
+-- zoom registration - inconsistent email
+WITH
+pzwr AS (
+SELECT start_time, zwr.event_id, email
+FROM public.zoom_webinar_registration zwr
+INNER JOIN public.zoom_webinar_event zwe ON zwr.event_id = zwe.event_id
+),
+tzwr AS (
+SELECT event_id, email
+FROM test.zoom_webinar_registration_v2
+)
+SELECT pzwr.start_time, pzwr.event_id AS p_event_id, pzwr.email AS p_email, tzwr.event_id AS t_event_id, tzwr.email AS t_email
+FROM pzwr
+FULL OUTER JOIN tzwr ON pzwr.event_id = tzwr.event_id AND pzwr.email IS NOT DISTINCT FROM tzwr.email
+WHERE tzwr.event_id IS NOT NULL
+ORDER BY pzwr.start_time asc;
+;
+
+
+
+WITH
+pzwr AS (
+SELECT start_time, zwr.event_id, zwr.email
+FROM public.zoom_webinar_registration zwr
+INNER JOIN public.zoom_webinar_event zwe ON zwr.event_id = zwe.event_id
+INNER JOIN test.zoom_webinar_registration tzwr ON zwr.event_id = tzwr.event_id
+WHERE tzwr.event_id IS NOT NULL
+),
+tzwr AS (
+SELECT event_id, email
+FROM test.zoom_webinar_registration_v2
+),
+outstanding_emails AS (
+SELECT event_id, email FROM pzwr
+EXCEPT
+SELECT event_id, email from tzwr)
+SELECT pzwr.start_time, pzwr.event_id, oe.email
+FROM pzwr 
+INNER JOIN outstanding_emails oe ON pzwr.event_id = oe.event_id
+GROUP BY pzwr.start_time, pzwr.event_id, oe.email
+ORDER BY pzwr.start_time;
+
