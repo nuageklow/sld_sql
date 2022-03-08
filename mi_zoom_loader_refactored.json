@@ -9,83 +9,83 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "u_event_id"
+            "u_event_id"
         ],
         "load_method": "upsert",
         "db_table_name": "zoom_webinar_event",
         "columns": [
-          {
+            {
             "name": "u_event_id",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "uuid",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "event_id",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "event_name",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "event_city",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "event_country_region",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "organising_chapter",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "event_status",
             "type": "text",
             "nullable": true,
             "default": "",
             "db_column_name": ""
-          },
-          {
+            },
+            {
             "name": "event_date",
             "type": "timestamp",
             "nullable": true,
             "default": "2016-01-01 00:00:00",
             "db_column_name": "start_time"
-          },
-          {
+            },
+            {
             "name": "duration_minutes",
             "type": "integer",
             "nullable": true,
             "default": "1",
             "db_column_name": ""
-          }
+            }
         ]
-      },
+      },  
       {
         "escape": "\\",
         "path": "/data/in/tables/zoom_webinar_registration.csv",
@@ -94,19 +94,12 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "id_sequence",
+          "id",
           "u_event_id"
         ],
         "load_method": "upsert",
-        "db_table_name": "zoom_webinar_registration_v2",
+        "db_table_name": "zoom_webinar_registration",
         "columns": [
-          {
-            "name": "id_sequence",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
           {
             "name": "u_event_id",
             "type": "text",
@@ -126,14 +119,7 @@
             "type": "text",
             "nullable": true,
             "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "registrant_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
+            "db_column_name": "registrant_id"
           },
           {
             "name": "status",
@@ -247,7 +233,7 @@
           "u_event_id"
         ],
         "load_method": "upsert",
-        "db_table_name": "zoom_webinar_attendance_v2",
+        "db_table_name": "zoom_webinar_attendance",
         "columns": [
           {
             "name": "id_sequence",
@@ -261,7 +247,7 @@
             "type": "text",
             "nullable": true,
             "default": "",
-            "db_column_name": "attendee_id"
+            "db_column_name": "id"
           },
           {
             "name": "u_event_id",
@@ -275,7 +261,7 @@
             "type": "text",
             "nullable": true,
             "default": "",
-            "db_column_name": "user_id"
+            "db_column_name": ""
           },
           {
             "name": "email",
@@ -478,19 +464,12 @@
         "quotation": "\"",
         "auto_create": false,
         "primary_keys": [
-          "id_sequence",
+          "id",
           "u_event_id"
         ],
         "load_method": "upsert",
-        "db_table_name": "zoom_meeting_registration_v2",
+        "db_table_name": "zoom_meeting_registration",
         "columns": [
-          {
-            "name": "id_sequence",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
-          },
           {
             "name": "u_event_id",
             "type": "text",
@@ -510,14 +489,7 @@
             "type": "text",
             "nullable": true,
             "default": "",
-            "db_column_name": ""
-          },
-          {
-            "name": "registrant_id",
-            "type": "text",
-            "nullable": true,
-            "default": "",
-            "db_column_name": ""
+            "db_column_name": "id"
           },
           {
             "name": "email",
@@ -631,7 +603,7 @@
           "u_event_id"
         ],
         "load_method": "upsert",
-        "db_table_name": "zoom_meeting_attendance_v2",
+        "db_table_name": "zoom_meeting_attendance",
         "columns": [
           {
             "name": "id_sequence",
@@ -641,11 +613,11 @@
             "db_column_name": ""
           },
           {
-            "name": "attendee_id",
+            "name": "id",
             "type": "text",
             "nullable": true,
             "default": "",
-            "db_column_name": "attendee_id"
+            "db_column_name": "id"
           },
           {
             "name": "u_event_id",
@@ -659,7 +631,7 @@
             "type": "text",
             "nullable": true,
             "default": "",
-            "db_column_name": "user_id"
+            "db_column_name": ""
           },
           {
             "name": "email",
@@ -721,12 +693,12 @@
       }
     ],
     "db": {
-      "host": "{{SLD_DB_HOST}}",
-      "port": "5432",
-      "schema": "{{SLD_DB_TEST_SCHEMA}}",
-      "database": "{{SLD_DB_DATABASE}}",
-      "user": "{{SLD_DB_USERNAME}}",
-      "#password": "{{#SLD_DB_PASS}}"
-    }
+        "host": "{{SLD_DB_HOST}}",
+        "port": "5432",
+        "schema": "{{SLD_DB_SCHEMA}}",
+        "database": "{{SLD_DB_DATABASE}}",
+        "user": "{{SLD_DB_USERNAME}}",
+        "#password": "{{#SLD_DB_PASS}}"
+      }
   }
 }

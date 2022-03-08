@@ -10,7 +10,7 @@
     CONSTRAINT attendee_raw_pkey PRIMARY KEY (_id)
     );
      
-    \COPY zoom.attendee_raw FROM '/home/karenion/Documents/volunteer/sld/sld_sql/../data/attendee_cleaned.csv' DELIMITER ',' CSV HEADER;
+    \COPY zoom.attendee_raw FROM '/mnt/d/Documents/volunteer/sld/sld_sql/../data/attendee_cleaned.csv' DELIMITER ',' CSV HEADER;
     
     DROP TABLE IF EXISTS zoom.registration_raw;
 
@@ -20,5 +20,5 @@
     CONSTRAINT registration_raw_pkey PRIMARY KEY (_id)
     );
      
-    \COPY zoom.registration_raw FROM '/home/karenion/Documents/volunteer/sld/sld_sql/../data/registration_cleaned.csv' DELIMITER ',' CSV HEADER;
+    \COPY zoom.registration_raw FROM '/mnt/d/Documents/volunteer/sld/sld_sql/../data/registration_cleaned.csv' DELIMITER ',' CSV HEADER;
     

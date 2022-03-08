@@ -1,6 +1,7 @@
 import csv, os
 # import pandas as pd
 
+print(os.getcwd())
 
 def get_headers(csv_file):
     '''  '''
@@ -45,3 +46,5 @@ for each_csv in csv_list:
     with open('zoom_raw.sql', 'a') as f:
         f.write(sql)
         f.close()
+
+
