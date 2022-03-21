@@ -9,3 +9,10 @@ SELECT
     '' AS registration_source,
     '' AS online_offline
 FROM raw_event_mapping
+
+
+
+
+
+
+

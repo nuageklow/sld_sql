@@ -1,0 +1,152 @@
+{
+  "events": [
+    {
+      "input_file": "in/files/events.ndjson",
+      "output_file": "out/tables/events.csv",
+      "fields": [
+        "id",
+        "name.text",
+        "start.local",
+        "start.timezone",
+        "status"
+      ]
+    },
+    {
+      "input_file":"in/files/attendees.ndjson",
+      "output_file":"out/tables/attendees.csv",
+      "fields": [
+        "id",
+        "profile.email",
+        "profile.first_name",
+        "profile.last_name",
+        "profile.addresses.home.city",
+        "profile.addresses.home.country",
+        "profile.gender",
+        "status",
+        "created",
+        "changed",
+        "event_id"
+      ],
+      "question_fields": [
+        "age_group",
+        "latest_role",
+        "current_industry",
+        "event_referred_source",
+        "current_job_level",
+        "current_company"
+      ],
+      "questions_map": {
+        "What's your age bracket?": "age_group",
+        "What is your latest job position?": "latest_role",
+        "In which industry do you work?": "current_industry",
+        "How did you find us?":"event_referred_source",
+        "At what type of level would you consider your current position?":"current_job_level",
+        "In which company?": "current_company"
+      },
+      "questions_to_skip": [
+        "Have you been to a Shelovesdata or Datadriven event before?",
+        "What is your highest Education level (Achieved, currently pursuing)",
+        "Which field or Major is your education?",
+        "What is your experience in Data Analytics?",
+        "Which tools/programming languages are you familiar with?",
+        "What do you want to get out of attending our workshop?",
+        "Which event was it?",
+        "What didn't you find?",
+        "Which Major were you looking for?",
+        "Tell us more about your experience!",
+        "Tell us more about your skills!",
+        "Which FB group was it?",
+        "Let us know why!",
+        "Let us know how you found us!",
+        "I would not like to continue receiving invites to future events organised by DataFirst around the topics of Data & related topics.",
+        "It's your time to ask questions! What would you like to ask the speakers in the panel discussion?",
+        "Collecting personal data",
+        "What job didn't you find?",
+        "What industry were you looking for?",
+        "What is the functional role of your latest job position?",
+        "What didn't we think about?",
+        "Which function/department didn't you find?",
+        "If lunch and snacks are provided, do you have dietary requirements we need to know about?",
+        "It's your time to ask questions! What would you like to ask our speakers?",
+        "Which event?",
+        "Which FB group it was?",
+        "Are you a JustCo member?",
+        "Would you like to be added to JustCo’s mailing list?",
+        "JustCo: The Photo & Video Disclaimer",
+        "Photo & video materials waiver",
+        "Photo &amp; video materials waiver",
+        "Which area are you currently / were you working in?",
+        "The afternoon part is optional. Will you stay for the afternoon session?",
+        "If you selected \"other\", please specify",
+        "Country of residence",
+        "Have you traveled to China in the past fourteen days?",
+        "Do you want to receive newsletter from JustCo and its information?",
+        "Terms and conditions", 
+        "If you achieve the necessary participation points towards the Forecasting Foundations Badge you may apply for the paid Certificate and Digital Badge at the end of the program. The fee for this will be SGD 150. Interested?",
+        "If you achieve the necessary participation points towards the Dashboard Specialist Badge you may apply for the paid Certificate and Digital Badge at the end of the program. The fee for this will be SGD 150. Interested?",
+        "What is your gender?",
+        "Have you attended a Shelovesdata or Datadriven event before?"
+      ]
+    },
+    {
+      "input_file": "in/files/events.ndjson",
+      "output_file": "out/tables/event_mapping.csv",
+      "fields": [
+        "id",
+        "name.text",
+        "start.local",
+        "start.timezone",
+        "status",
+        "summary"
+      ],
+      "split_fields": [
+        {
+          "name": "event_type",
+          "field": "name.text",
+          "delimeter": "_",
+          "position": -2
+        },
+        {
+          "name": "chapter",
+          "field": "name.text",
+          "delimeter": "_",
+          "position": -1
+        }
+      ],
+      "mapping_field": "summary",
+      "mappings": {
+        "event_topic": ["visualization","programming","softskills", "soft skills","digital marketing","other","intro to data","data"],
+        "level": ["beginner", "intermediate", "advanced"],
+        "event_focus_skill": ["python","power bi","tableau","data storytelling"    ,"leadership","google analytics","r","sql","machine learning","google data studio","yellowfin","qlik","social media","hiring","data basics","ai"]
+      },
+      "chapter_mapping": { "abv":"Abuja",
+                            "akl":"Auckland",
+                            "evn":"Yerevan",
+                            "sgn":"Ho Chi_Minh",
+                            "hkg":"Hong Kong",
+                            "cgk":"Jakarta",
+                            "jnb":"Johannesburg",
+                            "kul":"Kuala Lumpur",
+                            "lax":"Los Angeles",
+                            "mnl":"Manila",
+                            "mel":"Melbourne",
+                            "prg":"Prague",
+                            "rep":"Siem Reap",
+                            "sin":"Singapore",
+                            "syd":"Sydney",
+                            "uae":"UAE",
+                            "lhr":"London",
+                            "dxb":"Dubai",
+                            "del":"India"
+                    },
+      "defaults": {
+        "agenda": "no_agenda",
+        "event_type": "no_event_type",
+        "chapter": "no_chapter",
+        "event_topic": "no_event_topic",
+        "level": "no_level",
+        "event_focus_skill": "no_event_focus_skill"
+      }
+    }
+  ]
+}
