@@ -1,0 +1,71 @@
+{
+    "parameters": {
+      "tables": [
+        {
+          "escape": "\\",
+          "path": "/data/in/tables/fb_post_insights.csv",
+          "headers": true,
+          "delimiter": ",",
+          "quotation": "'",
+          "auto_create": false,
+          "primary_keys": [
+            "id"
+          ],
+          "load_method": "upsert",
+          "db_table_name": "sm_facebook_post_insight",
+          "columns": [
+            {
+              "name": "id",
+              "type": "text",
+              "db_column_name": "",
+              "nullable": false
+            },
+            {
+              "name": "created_time",
+              "type": "timestamp",
+              "db_column_name": "",
+              "nullable": true
+            },
+            {
+              "name": "num_clicks",
+              "type": "integer",
+              "db_column_name": "",
+              "nullable": true
+            },
+            {
+              "name": "num_engaged_users",
+              "type": "integer",
+              "db_column_name": "",
+              "nullable": true
+            },
+            {
+              "name": "num_reaction_likes",
+              "type": "integer",
+              "db_column_name": "",
+              "nullable": true
+            },
+            {
+              "name": "num_impressions",
+              "type": "integer",
+              "db_column_name": "",
+              "nullable": true
+            },
+            {
+              "name": "num_engaged_fans",
+              "type": "integer",
+              "db_column_name": "",
+              "nullable": true
+            }
+          ]
+        }
+      ],
+      "db": {
+        "host": "{{SLD_DB_HOST}}",
+        "port": "5432",
+        "schema": "{{SLD_DB_SCHEMA}}",
+        "database": "{{SLD_DB_DATABASE}}",
+        "user": "postgres",
+        "#password": "encrypted::g6fd+dz6P13QA4UTt/Egb42scMGFmFDAEq1t1HUiFVVDmKv91yBXOUyb8rrNWL3b9eRYGIqcbSK9qtWrZIjf84ArgVYaHE2YvGVtpbdyH3R9FtgwZKckPNdR26AoN6s7M18jREvlFiFURpCX0UMCbqEVoIVb1O7R++g/fodjqSdcVSYE1Dg/JpRTotYoxxjEZVxDwu+IjBqxg/dyYCJmL84g0Im6iuwXqn2WkSQiFUp+9HLGO4HVv0RppftTEoReqyZ27o8Cr5uwXAyWMq+wgvjA5bS5yQ9TQUPfLjBgXFnDjrRfFGZ15LbeGBdWkKvJCfZHskOBWYug9e0fEbGrpg==|gAAAAABiMYxzeDjtjGZCpCzdx3nqzLkBQ4m7Rd-t-pCemnR-h5ek9vGdlTlhRFDnKLGdpZ5cNYMCz0nqUEW2jEwxkq_dzxS0vdwh0W4myqPp5WxN_dC_vlMcHUM9_7WAMS9wrihlPaaI"
+      }
+    }
+  }

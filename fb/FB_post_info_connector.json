@@ -1,0 +1,24 @@
+{
+    "parameters": {
+      "accounts": {
+        "146793779106014": {
+          "id": "146793779106014"
+        }
+      },
+      "api-version": "v5.0",
+      "queries": [
+        {
+          "query": {
+            "limit": "",
+            "path": "posts",
+            "since": "60 days ago",
+            "ids": "146793779106014",
+            "fields": "message, created_time, comments, likes"
+          },
+          "type": "nested-query",
+          "id": 1,
+          "name": "post_info"
+        }
+      ]
+    }
+  }
