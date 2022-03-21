@@ -52,7 +52,10 @@ DATE(event.start_local) AS event_date,
 map.chapter,
 map.event_type,
 map.event_topic,
-map.level
+map.level,
+null AS online_offline,
+registration_source,
+
 
 
 
