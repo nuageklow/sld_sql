@@ -14,15 +14,6 @@ WHERE (topic LIKE '[Webinar]%' AND date(start_time) < date('2021-04-01'))
   OR topic LIKE 'Meiro'
   OR topic LIKE 'Certification';
 
-  /* event mapping */
-CREATE TABLE zoom_event_mapping AS
-  WITH mapping_combine AS (
-    SELECT * FROM webinar_event_mapping
-    UNION
-    SELECT * FROM meeting_event_mapping
-  )
-  SELECT * FROM mapping_combine;
-
 /* zoom webinar event */
 CREATE TABLE zoom_webinar_event AS
 SELECT
@@ -231,7 +222,13 @@ WHERE
 AND DATE(start_time) < current_date;
 
 
-/*lookup table for event mapping */
+
+
+
+-- Event Mapping
+/* 4 Oct 2021 added in logic to exclude mapping that is already available in event_label_mapping */
+
+    /*lookup table for event mapping */
 CREATE TABLE event_focus_skill_lookup (
 lookup_name text NOT NULL DEFAULT ''::text );
 
@@ -270,13 +267,12 @@ VALUES ('abv'),('akl'),('evn'),('sgn'),('hkg'),('cgk'),('jnb'),
 CREATE TABLE event_type_lookup (
 lookup_name text NOT NULL DEFAULT ''::text );
 
-INSERT INTO event_type_lookup
-VALUES ('Meet up'),('Hackathon'),('Hands-on workshop'),('Workshop'),('Certification Program'),('Other'),('Podcast'),
-('Internal meeting'),('Test'),('Networking'),('Mentoring')
+INSERT INTO event_topic_lookup
+VALUES ('Visualization'),('Programming'),('Soft Skills'),('Digital Marketing'),('Other'),('Intro to Data'),('Data')
 ;
 
 
--- Event Mapping
+
 /* 4 Oct 2021 added in logic to exclude mapping that is already available in event_label_mapping */
 CREATE TABLE zoom_event_mapping AS
 WITH combined_mapping as (
@@ -305,7 +301,7 @@ WITH combined_mapping as (
     SELECT u_event_id
          , uuid
          , event_id
-         , start_time::TEXT AS start_time
+         , DATE(start_time) AS start_time
     FROM zoom_meeting_event
 
     UNION ALL
@@ -313,14 +309,14 @@ WITH combined_mapping as (
     SELECT u_event_id
          , uuid
          , event_id
-         , start_time::TEXT AS start_time
+         , DATE(start_time) AS start_time
     FROM zoom_webinar_event
 )
 
 , interim as (
-SELECT event.u_event_id
+SELECT DISTINCT(event.u_event_id)
      , map.topic as event_name
-     , map.start_time::TIMESTAMP as event_date
+     , DATE(map.start_time) as event_date
      , case
         when lower(chapter) = 'abv' then 'Abuja'
         when lower(chapter) = 'akl' then 'Auckland'
@@ -341,8 +337,8 @@ SELECT event.u_event_id
         when lower(chapter) = 'lhr' then 'London'
         when lower(chapter) = 'dxb' then 'Dubai'
         when lower(chapter) = 'del' then 'India'
-       else ''
-       end as chapter
+      else ''
+      end as chapter
      , et.lookup_name as event_type
      , eto.lookup_name as event_topic
      , l.lookup_name as level
@@ -357,7 +353,7 @@ FROM combined_mapping as map
 LEFT JOIN combined_events event
     ON map.uuid = event.uuid
     AND map.id = event.event_id
-    AND map.start_time = event.start_time
+    AND DATE(map.start_time) = DATE(event.start_time)
 LEFT JOIN event_type_lookup et ON lower(map.event_type) = replace(lower(et.lookup_name),' ','')
 LEFT JOIN chapter_lookup c ON lower(map.chapter) = replace(lower(c.lookup_name),' ','')
 LEFT JOIN event_topic_lookup eto ON lower(map.event_topic) = replace(lower(eto.lookup_name),' ','')
@@ -377,7 +373,7 @@ SELECT u_event_id
      , organising_chapter as chapter
      , case when regexp_replace(lower(event_name), '[^\w]+ ','','g') like 'internal meeting%' then  'Internal meeting'
             when regexp_replace(lower(event_name), '[^a-zA-Z0-9]+','','g') like 'externalmeeting%' then 'External meeting'
-       end as event_type
+      end as event_type
      , 'Other' as event_topic
      , '' as level
      , 'Online' as online_offline
@@ -399,7 +395,7 @@ SELECT u_event_id
      , organising_chapter as chapter
      , case when regexp_replace(lower(event_name), '[^\w]+ ','','g') like 'internal meeting%' then  'Internal meeting'
             when regexp_replace(lower(event_name), '[^a-zA-Z0-9]+','','g') like 'externalmeeting%' then 'External meeting'
-       end as event_type
+      end as event_type
      , 'Other' as event_topic
      , '' as level
      , 'Online' as online_offline
@@ -456,10 +452,11 @@ WHERE regexp_replace(lower(event_name), '[^\w]+ ','','g') like 'test%'
 SELECT automated_map.*
 FROM interim as automated_map
 LEFT JOIN event_label_mapping as db_map
-       ON db_map.u_event_id = automated_map.u_event_id
-       AND REGEXP_REPLACE(lower(db_map.event_name),'[^\w|\t|\s]+','','g') = REGEXP_REPLACE(lower(automated_map.event_name),'[^\w|\t|\s]+','','g')
-       AND DATE(db_map.event_date) = DATE(automated_map.event_date)
-WHERE db_map.u_event_id IS NULL
+      ON db_map.u_event_id = automated_map.u_event_id
+      AND REGEXP_REPLACE(lower(db_map.event_name),'[^\w|\t|\s]+','','g') = REGEXP_REPLACE(lower(automated_map.event_name),'[^\w|\t|\s]+','','g')
+      AND db_map.u_event_id != '978+46523'
+      AND DATE(db_map.event_date) = DATE(automated_map.event_date)
+WHERE db_map.u_event_id IS NULL 
 ;
 
 UPDATE zoom_event_mapping
