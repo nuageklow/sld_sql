@@ -1,5 +1,3 @@
-/* event_mapping */
-
 -- Event Mapping
 /* 4 Oct 2021 added in logic to exclude mapping that is already available in event_label_mapping */
 
