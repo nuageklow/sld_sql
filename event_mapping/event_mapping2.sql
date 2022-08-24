@@ -1,6 +1,48 @@
--- Event Mapping
-/* 4 Oct 2021 added in logic to exclude mapping that is already available in event_label_mapping */
+CREATE TABLE event_focus_skill_lookup (
+lookup_name text NOT NULL DEFAULT ''::text );
 
+
+INSERT INTO event_focus_skill_lookup
+VALUES ('Python'),('Power BI'),('Tableau'),('Data Storytelling'),('Leadership'),('Google Analytics'),('R'),
+('SQL'),('Machine Learning'),('Google Data Studio'),('Yellowfin'),('Qlik'),('Social Media'),('Hiring'), ('Data Basics'),('AI')
+
+;
+
+CREATE TABLE level_lookup (
+lookup_name text NOT NULL DEFAULT ''::text );
+
+INSERT INTO level_lookup
+VALUES ('Beginner'),('Intermediate'),('Advanced')
+
+;
+
+CREATE TABLE event_topic_lookup (
+lookup_name text NOT NULL DEFAULT ''::text );
+
+INSERT INTO event_topic_lookup
+VALUES ('Visualization'),('Programming'),('Soft Skills'),('Digital Marketing'),('Other'),('Intro to Data'),('Data')
+
+;
+
+CREATE TABLE chapter_lookup (
+lookup_name text NOT NULL DEFAULT ''::text );
+
+INSERT INTO chapter_lookup
+VALUES ('abv'),('akl'),('evn'),('sgn'),('hkg'),('cgk'),('jnb'),
+        ('kul'),('lax'),('mnl'),('mel'),('prg'),('rep'),('sin'),
+        ('syd'),('uae'),('lhr'),('dxb'),('del')
+;
+
+CREATE TABLE event_type_lookup (
+lookup_name text NOT NULL DEFAULT ''::text );
+
+INSERT INTO event_topic_lookup
+VALUES ('Visualization'),('Programming'),('Soft Skills'),('Digital Marketing'),('Other'),('Intro to Data'),('Data')
+;
+
+
+
+/* 4 Oct 2021 added in logic to exclude mapping that is already available in event_label_mapping */
 CREATE TABLE zoom_event_mapping AS
 WITH combined_mapping as (
     SELECT *
@@ -90,10 +132,8 @@ WHERE
         regexp_replace(lower(map.topic), '[^\w]+ ','','g') not like 'internal meeting%'
     AND regexp_replace(lower(map.topic), '[^a-zA-Z0-9]+','','g') not like 'externalmeeting%'
     AND regexp_replace(lower(map.topic), '[^a-zA-Z0-9]+','','g') not like 'test%'
-
 UNION ALL
-
-/* Manual mapping for Internal Meeting */
+/* Manual mapping for Internal Meeting - zoom_meeting_event */
 SELECT u_event_id
      , event_name
      , date(start_time) as event_date
@@ -112,10 +152,9 @@ SELECT u_event_id
      , current_timestamp + '8 hour'::interval as batch_processing_date
 FROM zoom_meeting_event
 WHERE regexp_replace(lower(event_name), '[^\w]+ ','','g') like 'internal meeting%' or regexp_replace(lower(event_name), '[^a-zA-Z0-9]+','','g') like 'externalmeeting%'
-
 UNION ALL
 
-/* Manual mapping for Internal Meeting */
+/* Manual mapping for Internal Meeting - zoom_webinar_event */
 SELECT u_event_id
      , event_name
      , date(start_time) as event_date
@@ -134,7 +173,6 @@ SELECT u_event_id
      , current_timestamp + '8 hour'::interval as batch_processing_date
 FROM zoom_webinar_event
 WHERE regexp_replace(lower(event_name), '[^\w]+ ','','g') like 'internal meeting%' or regexp_replace(lower(event_name), '[^a-zA-Z0-9]+','','g') like 'externalmeeting%'
-
 UNION ALL
 
 /* Manual mapping for Test */
@@ -175,7 +213,6 @@ SELECT u_event_id
 FROM zoom_meeting_event
 WHERE regexp_replace(lower(event_name), '[^\w]+ ','','g') like 'test%'
 )
-
 SELECT automated_map.*
 FROM interim as automated_map
 LEFT JOIN event_label_mapping as db_map
@@ -183,10 +220,5 @@ LEFT JOIN event_label_mapping as db_map
       AND REGEXP_REPLACE(lower(db_map.event_name),'[^\w|\t|\s]+','','g') = REGEXP_REPLACE(lower(automated_map.event_name),'[^\w|\t|\s]+','','g')
       AND db_map.u_event_id != '978+46523'
       AND DATE(db_map.event_date) = DATE(automated_map.event_date)
-WHERE db_map.u_event_id IS NULL 
-;
-
-UPDATE zoom_event_mapping
-set event_type = 'Test'
-where event_name like 'Test %'
+    --   WHERE db_map.u_event_id IS NULL 
 ;
