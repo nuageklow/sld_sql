@@ -69,7 +69,10 @@ class CSV2TBL(TBLData):
     def _concat_list(self, sql_list):
         return ' '.join(sql_list)
 
+
     def clean_col(self, col_list):
+        cleaned_col_list = []
+
         clean_dict = {
         '-': '_',
         ',|\n': '',
@@ -77,7 +80,6 @@ class CSV2TBL(TBLData):
         'period': 'd_period'
         }
 
-        cleaned_col_list = []
         for col in col_list:
             for k, v in clean_dict.items():
                 col = re.sub(k, v, col)
@@ -85,8 +87,23 @@ class CSV2TBL(TBLData):
 
         return cleaned_col_list
 
-    def clean_data(self):
-        pass
+    def clean_data(self, data_list):
+        cleaned_data_list = []
+
+        clean_dict = {
+        ',|\n': ''
+        }
+
+        for dp in data_list:
+            cleaned_dict = {}
+            print(dp)
+            exit()
+            for k, v in clean_dict.items():
+                dp = re.sub(k, v, dp)
+            cleaned_data_list.append(dp)
+
+        return cleaned_data_list
+
 
     def create_tbl_sql(self, col_list, num_cols=[]):
         sql_list = []
@@ -109,11 +126,28 @@ class CSV2TBL(TBLData):
 
         return self._concat_list(sql_list)
 
+    def generate_new_csv(self, csv_path, col_list, data_list):
+        with open(csv_path, 'w') as fw:
+            writer = csv.DictWriter(fw, fieldnames=col_list)
+
+            writer.writeheader()
+            writer.writerows(data_list)
+
+            fw.close()
 
     def run(self):
         new_col_list = self.clean_col(self.col_list)
         new_table = self.create_tbl_sql(new_col_list)
         print(new_table)
+        new_data_list = self.clean_data(self.data)
+
+        data_path = os.path.dirname(self.csv_file)
+        new_csv_name = f'sql_{self.tbl_name}.csv'
+        new_csv_path = os.path.join(data_path, new_csv_name)
+
+        self.generate_new_csv(new_csv_path, new_col_list, new_data_list)
+
+
 
 
 if __name__ == '__main__':
