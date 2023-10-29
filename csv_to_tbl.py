@@ -87,7 +87,18 @@ class CSV2TBL(TBLData):
 
         return cleaned_col_list
 
-    def clean_data(self, data_list):
+    def clean_data(self, dp):
+        cleaned_dict = {}
+
+        for k, v in dp.items():
+            new_v = re.sub(r'\n','<br/>', v)
+            new_v = re.sub(r',|"',' ', new_v)
+            cleaned_dict[k] = new_v
+        # print(cleaned_dict)
+
+        return cleaned_dict
+
+    def clean_data_whole(self, data_list):
         cleaned_data_list = []
 
         clean_dict = {
@@ -97,15 +108,21 @@ class CSV2TBL(TBLData):
         for dp in data_list:
             cleaned_dict = {}
             print(dp)
-            exit()
-            for k, v in clean_dict.items():
-                dp = re.sub(k, v, dp)
+            for mk, mv in clean_dict.items():
+                # dp = dict(map(lambda (k,v) : re.sub(mk, mv, v), dp.iteritems()))
+                dp = list(map(lambda x: re.sub(mk, mv, x), dp.values()))
+                dp = dict(map(lambda x: ()))
+                a = dict(map(lambda x: (x, {}), ins))
+                # {map(lambda x: f(x),bill.values())}
+
+                # dp = re.sub(k, v, map(lambda x: x, dp.values()))
+                # print(dp)
             cleaned_data_list.append(dp)
 
         return cleaned_data_list
 
 
-    def create_tbl_sql(self, col_list, num_cols=[]):
+    def generate_tbl_sql(self, col_list, num_cols=[]):
         sql_list = []
 
         sql_prefix = f"CREATE TABLE IF NOT EXISTS {self.tbl_name}(\n"
@@ -137,15 +154,22 @@ class CSV2TBL(TBLData):
 
     def run(self):
         new_col_list = self.clean_col(self.col_list)
-        new_table = self.create_tbl_sql(new_col_list)
+        new_table = self.generate_tbl_sql(new_col_list)
         print(new_table)
-        new_data_list = self.clean_data(self.data)
+
+        new_data_list = []
+        for dp in self.data:
+            cleaned_dp = self.clean_data(dp)
+            new_data_list.append(cleaned_dp)
+
+        # new_data_list = self.clean_data(self.data)
 
         data_path = os.path.dirname(self.csv_file)
         new_csv_name = f'sql_{self.tbl_name}.csv'
         new_csv_path = os.path.join(data_path, new_csv_name)
 
         self.generate_new_csv(new_csv_path, new_col_list, new_data_list)
+
 
 
 
