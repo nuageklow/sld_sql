@@ -1,0 +1,66 @@
+{
+  "parameters": {
+    "accounts": {
+      "17841406133311638": {
+        "category": "nonprofit",
+        "fb_page_id": "146793779106014",
+        "name": "shelovesdata",
+        "id": "17841406133311638"
+      }
+    },
+    "api-version": "v5.0",
+    "queries": [
+      {
+        "id": "age",
+        "type": "nested-query",
+        "name": "age",
+        "query": {
+          "fields": "insights.period(lifetime).metric(follower_demographics).timeframe(last_14_days).metric_type(total_value).breakdown(age)",
+          "limit": "100",
+          "since":"1658991600",
+          "path": "",
+          "ids": ""
+        }
+      },
+      {
+        "id": "city",
+        "type": "nested-query",
+        "name": "city",
+        "query": {
+          "fields": "insights.period(lifetime).metric(follower_demographics).metric_type(total_value).breakdown(city)",
+          "limit": "100",
+          "since": "",
+          "until": "",
+          "path": "",
+          "ids": ""
+        }
+      },
+      {
+        "id": "country",
+        "type": "nested-query",
+        "name": "country",
+        "query": {
+          "fields": "insights.period(lifetime).metric(follower_demographics).metric_type(total_value).breakdown(country)",
+          "limit": "100",
+          "since": "yesterday",
+          "until": "",
+          "path": "",
+          "ids": ""
+        }
+      },
+      {
+        "id": "gender",
+        "type": "nested-query",
+        "name": "gender",
+        "query": {
+          "fields": "insights.period(lifetime).metric(follower_demographics).metric_type(total_value).breakdown(gender)",
+          "limit": "100",
+          "since": "",
+          "until": "",
+          "path": "",
+          "ids": ""
+        }
+      }
+    ]
+  }
+}

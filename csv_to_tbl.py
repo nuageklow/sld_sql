@@ -31,6 +31,7 @@ class TBL:
         return tbl_name
 
     def _get_columns(self, data_list):
+        print(data_list)
         return list(data_list[0].keys())
 
     def __str__(self):
@@ -50,8 +51,12 @@ class TBLData(TBL):
 
     @data.setter
     def data(self, value):
+        self._setup(self.csv_file)
         value = self._get_data(self.csv_file)
         self._data = value
+
+    def _setup(self, csv_file):
+        print(f'set up ')
 
     def _get_data(self, csv_file):
         with open(csv_file, 'r') as fr:
@@ -61,6 +66,7 @@ class TBLData(TBL):
 
         return data_list
 
+    
 
 class CSV2TBL(TBLData):
     def __init__(self, csv_file, tbl_name=None):
